@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn — Product Improvement · Shreyas Pandit</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFFFF;
+  --off:#F4F4F0;
+  --off2:#EAEAE4;
+  --ink:#0A0A0A;
+  --ink2:#222222;
+  --ink3:#555555;
+  --ink4:#999999;
+  --blue:#0A66C2;
+  --blue2:#084D93;
+  --blue-off:#EBF3FC;
+  --red:#CC2200;
+  --red-off:#FDF0EE;
+  --grn:#1A6644;
+  --grn-off:#EBF5EF;
+  --font-h:'Space Grotesk',sans-serif;
+  --font-b:'Newsreader',serif;
+  --font-m:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:15px;line-height:1.7;overflow-x:hidden}
+
+/* ── MASTHEAD ── */
+.masthead{
+  border-bottom:4px solid var(--ink);
+  padding:28px 56px 20px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:end;gap:24px;
+}
+.mh-issue{
+  font-family:var(--font-m);
+  font-size:10px;color:var(--ink4);
+  letter-spacing:0.08em;
+  line-height:1.6;
+}
+.mh-title-block{text-align:center;}
+.mh-pub{
+  font-family:var(--font-h);
+  font-size:11px;font-weight:700;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:4px;
+}
+.mh-hed{
+  font-family:var(--font-h);
+  font-size:42px;font-weight:700;
+  letter-spacing:-0.03em;color:var(--ink);
+  line-height:1;
+}
+.mh-hed span{color:var(--blue);}
+.mh-byline-col{
+  text-align:right;
+  font-family:var(--font-m);
+  font-size:10px;color:var(--ink4);
+  line-height:1.8;
+}
+
+/* ── STANDFIRST ── */
+.standfirst{
+  background:var(--ink);
+  padding:18px 56px;
+  display:flex;align-items:center;gap:20px;
+}
+.sf-text{
+  font-family:var(--font-h);
+  font-size:14px;font-weight:400;
+  color:rgba(255,255,255,0.82);
+  line-height:1.6;flex:1;
+}
+.sf-text strong{color:white;}
+.sf-tags{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;}
+.sf-tag{
+  font-family:var(--font-m);
+  font-size:10px;padding:4px 10px;
+  border:1px solid rgba(255,255,255,0.25);
+  color:rgba(255,255,255,0.65);
+  white-space:nowrap;
+}
+
+/* ── NEWSPAPER GRID ── */
+.paper{
+  display:grid;
+  grid-template-columns:1fr 3px 2fr 3px 1fr;
+  max-width:1200px;
+  margin:0 auto;
+  border-bottom:2px solid var(--ink);
+}
+.col-rule{background:var(--off2);}
+.col{padding:40px 36px;}
+.col-left{border-right:none;}
+.col-wide{border-right:none;}
+
+/* ── SINGLE COLUMN SECTIONS ── */
+.full-section{
+  max-width:860px;margin:0 auto;
+  padding:48px 56px;
+  border-bottom:1px solid var(--off2);
+}
+.full-section:last-of-type{border-bottom:none;}
+
+/* ── TYPE SYSTEM — deliberately different from portfolio ── */
+.kicker{
+  font-family:var(--font-m);
+  font-size:10px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--blue);
+  display:inline-block;
+  border-bottom:2px solid var(--blue);
+  padding-bottom:2px;
+  margin-bottom:14px;
+}
+.headline{
+  font-family:var(--font-h);
+  font-size:clamp(26px,3.5vw,44px);
+  font-weight:700;line-height:1.08;
+  letter-spacing:-0.025em;color:var(--ink);
+  margin-bottom:16px;
+}
+.headline span{color:var(--blue);}
+.deck{
+  font-family:var(--font-b);
+  font-size:17px;font-style:italic;
+  color:var(--ink3);line-height:1.6;
+  margin-bottom:24px;
+  font-weight:300;
+}
+.col-headline{
+  font-family:var(--font-h);
+  font-size:19px;font-weight:700;
+  letter-spacing:-0.02em;color:var(--ink);
+  line-height:1.2;margin-bottom:12px;
+}
+.col-headline span{color:var(--blue);}
+p{
+  font-size:14px;color:var(--ink2);
+  line-height:1.9;margin-bottom:14px;
+}
+p.small{font-size:13px;}
+p:last-child{margin-bottom:0;}
+strong{color:var(--ink);font-weight:600;}
+
+/* ── PULL QUOTE ── */
+.pullquote{
+  font-family:var(--font-h);
+  font-size:20px;font-weight:600;
+  line-height:1.3;color:var(--ink);
+  border-top:3px solid var(--ink);
+  border-bottom:1px solid var(--off2);
+  padding:16px 0;margin:24px 0;
+  letter-spacing:-0.01em;
+}
+
+/* ── BOXES ── */
+.box{
+  border:2px solid var(--ink);
+  padding:18px 20px;margin:20px 0;
+  background:var(--off);
+}
+.box-label{
+  font-family:var(--font-m);
+  font-size:9px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:10px;
+  border-bottom:1px solid var(--off2);
+  padding-bottom:8px;
+}
+.box-text{
+  font-size:13px;color:var(--ink2);
+  line-height:1.75;
+}
+.box-text strong{color:var(--blue);}
+.box-blue{background:var(--blue-off);border-color:var(--blue);}
+.box-blue .box-label{color:var(--blue);}
+.box-red{background:var(--red-off);border-color:var(--red);}
+.box-red .box-label{color:var(--red);}
+.box-red .box-text strong{color:var(--red);}
+.box-grn{background:var(--grn-off);border-color:var(--grn);}
+.box-grn .box-label{color:var(--grn);}
+.box-grn .box-text strong{color:var(--grn);}
+
+/* ── COLUMN RULE DECORATOR ── */
+.col-rule-label{
+  writing-mode:vertical-lr;
+  font-family:var(--font-m);
+  font-size:9px;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--ink4);
+  padding:20px 0;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── PROBLEM CARDS ── */
+.prob-stack{display:flex;flex-direction:column;gap:12px;margin:16px 0;}
+.prob-card{
+  border-left:3px solid var(--ink);
+  padding:12px 14px;background:var(--off);
+}
+.prob-card.high{border-left-color:var(--red);}
+.prob-card.med{border-left-color:var(--blue);}
+.prob-label{
+  font-family:var(--font-m);
+  font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:6px;
+}
+.prob-card.high .prob-label{color:var(--red);}
+.prob-card.med .prob-label{color:var(--blue);}
+.prob-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;font-family:var(--font-h);}
+.prob-desc{font-size:12px;color:var(--ink3);line-height:1.6;}
+
+/* ── SOLUTION LAYOUT ── */
+.solution-wrap{margin:24px 0;}
+.solution-num-row{
+  display:flex;align-items:center;gap:0;
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+  margin-bottom:20px;
+}
+.sn-num{
+  font-family:var(--font-h);
+  font-size:48px;font-weight:700;
+  color:white;background:var(--ink);
+  padding:8px 20px;line-height:1;
+  letter-spacing:-0.03em;
+}
+.sn-title{
+  font-family:var(--font-h);
+  font-size:20px;font-weight:700;
+  color:var(--ink);padding:0 20px;
+  letter-spacing:-0.02em;line-height:1.2;
+}
+.sn-title span{color:var(--blue);}
+.sn-type{
+  margin-left:auto;padding:0 20px;
+  font-family:var(--font-m);
+  font-size:9px;color:var(--ink4);
+  letter-spacing:0.1em;text-transform:uppercase;
+  text-align:right;line-height:1.4;
+}
+
+.sol-grid{
+  display:grid;grid-template-columns:1fr 200px;
+  gap:28px;margin-bottom:16px;
+}
+.sol-meta-item{
+  margin-bottom:12px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--off2);
+}
+.sol-meta-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.sol-meta-label{
+  font-family:var(--font-m);
+  font-size:9px;color:var(--ink4);
+  letter-spacing:0.12em;text-transform:uppercase;
+  margin-bottom:3px;
+}
+.sol-meta-val{font-size:12px;color:var(--ink2);line-height:1.5;}
+
+/* ── EXPERIMENT TABLE ── */
+.exp-table{
+  width:100%;border-collapse:collapse;
+  margin:20px 0;font-size:13px;
+  border:2px solid var(--ink);
+}
+.exp-table th{
+  font-family:var(--font-h);
+  font-size:10px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:white;background:var(--ink);
+  padding:10px 14px;text-align:left;
+}
+.exp-table td{
+  padding:11px 14px;
+  border-bottom:1px solid var(--off2);
+  color:var(--ink3);line-height:1.5;
+  vertical-align:top;
+}
+.exp-table td:first-child{
+  font-weight:600;color:var(--ink2);
+  border-right:1px solid var(--off2);
+  font-family:var(--font-h);
+  font-size:13px;
+  white-space:nowrap;
+}
+.exp-table tr:last-child td{border-bottom:none;}
+
+/* ── METRICS ── */
+.metrics-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;background:var(--ink);
+  border:2px solid var(--ink);margin:24px 0;
+}
+.metric-cell{
+  background:var(--bg);padding:18px 18px;
+}
+.mc-val{
+  font-family:var(--font-h);
+  font-size:28px;font-weight:700;
+  color:var(--blue);line-height:1;margin-bottom:4px;
+  letter-spacing:-0.02em;
+}
+.mc-name{font-family:var(--font-h);font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.mc-desc{font-size:11px;color:var(--ink4);line-height:1.4;}
+
+/* ── BACK ── */
+.back{
+  padding:24px 56px;border-top:2px solid var(--ink);
+  font-family:var(--font-m);font-size:11px;
+  color:var(--blue);text-decoration:none;display:block;
+  letter-spacing:0.06em;
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="mh-issue">
+    PRODUCT IMPROVEMENT<br>
+    CASE STUDY<br>
+    SHREYAS PANDIT
+  </div>
+  <div class="mh-title-block">
+    <div class="mh-pub">Product Thinking</div>
+    <div class="mh-hed">LINKED<span>IN</span></div>
+  </div>
+  <div class="mh-byline-col">
+    PLATFORM: PROFESSIONAL<br>
+    NETWORK / JOB SEARCH<br>
+    FOCUS: FEED + DISCOVERY
+  </div>
+</div>
+
+<!-- STANDFIRST -->
+<div class="standfirst">
+  <div class="sf-text">LinkedIn has <strong>1 billion users.</strong> Its feed surfaces content from people you barely know. Its job search buries signals under noise. Its notifications are mostly irrelevant. Here's how to fix the parts that matter most.</div>
+  <div class="sf-tags">
+    <span class="sf-tag">Feed Quality</span>
+    <span class="sf-tag">Job Discovery</span>
+    <span class="sf-tag">Notifications</span>
+  </div>
+</div>
+
+<!-- THREE COLUMN NEWSPAPER LAYOUT -->
+<div class="paper">
+
+  <!-- LEFT COLUMN: THE PROBLEM -->
+  <div class="col col-left">
+    <div class="kicker">The Problem</div>
+    <div class="col-headline">A Network of Connections. A Feed of <span>Strangers.</span></div>
+    <p class="small">LinkedIn's core promise is professional networking. But the product has drifted so far from that promise that most users now experience it as a content platform — one where the algorithm serves posts from people they've never met, skipping over updates from people they actually know.</p>
+    <p class="small">The feed has been optimised for engagement metrics: likes, comments, shares. That optimisation produced a platform full of inspirational posts, humble brags, and performative vulnerability from accounts with large followings — and buried the actual professional signal that makes LinkedIn valuable.</p>
+
+    <div class="pullquote">The algorithm learned to serve viral. It forgot to serve useful.</div>
+
+    <p class="small">The job search product has a parallel problem. A search for "Product Manager, Delhi" returns hundreds of listings — many of which are weeks old, many of which have already been filled, and many of which the user is wildly under or overqualified for. There is very little filtering intelligence. The burden of qualification sits entirely with the user.</p>
+  </div>
+
+  <div class="col-rule"><div class="col-rule-label">Analysis</div></div>
+
+  <!-- CENTRE COLUMN: DEEP DIVE -->
+  <div class="col col-wide">
+    <div class="kicker">Where It Breaks</div>
+    <div class="headline">Three Specific Failures Worth <span>Fixing</span></div>
+    <div class="deck">Not everything about LinkedIn is broken. The professional identity layer, the messaging infrastructure, the company pages — these work. What follows are the three specific surfaces where the product actively makes the experience worse.</div>
+
+    <div class="prob-stack">
+      <div class="prob-card high">
+        <div class="prob-label">Critical</div>
+        <div class="prob-title">The Feed Serves Reach, Not Relevance</div>
+        <div class="prob-desc">Posts from people with large follower counts surface ahead of posts from first-degree connections. A post from someone you've never met gets more visibility than an update from your actual colleague. The network effect is inverted.</div>
+      </div>
+      <div class="prob-card high">
+        <div class="prob-label">Critical</div>
+        <div class="prob-title">Job Listings Have No Freshness Signal</div>
+        <div class="prob-desc">A job posted 45 days ago sits alongside one posted today. Many listings are "evergreen" — companies keep them live even after filling the role. Users apply to ghost jobs with no way of knowing. Rejection or silence follows. Trust erodes.</div>
+      </div>
+      <div class="prob-card med">
+        <div class="prob-label">Significant</div>
+        <div class="prob-title">Notifications Are Noise, Not Intelligence</div>
+        <div class="prob-desc">"X viewed your profile." "Congratulate Y on their work anniversary." "Your post is getting traction." Almost none of these notifications require action. They create a pavlovian check-in loop without delivering value. The ones that matter — a recruiter message, a relevant job alert — get buried.</div>
+      </div>
+    </div>
+
+    <div class="box box-red">
+      <div class="box-label">The Core Tension</div>
+      <div class="box-text"><strong>LinkedIn makes money from advertising and recruiter subscriptions.</strong> Both are served by high engagement — more time on platform, more content interaction, more notifications clicked. The product incentives point toward a noisy, high-engagement feed. The user's interest points toward a quiet, high-signal one. These are in direct conflict, and right now the platform's interests are winning.</div>
+    </div>
+  </div>
+
+  <div class="col-rule"><div class="col-rule-label">Context</div></div>
+
+  <!-- RIGHT COLUMN: QUICK DATA -->
+  <div class="col">
+    <div class="kicker">By the Numbers</div>
+    <div class="col-headline">The Scale of the Problem</div>
+
+    <p class="small" style="margin-bottom:20px;">Numbers that contextualise why getting this right matters:</p>
+
+    <div class="box box-blue" style="margin-bottom:12px;">
+      <div class="box-label">Feed</div>
+      <div class="box-text"><strong>~40%</strong> of LinkedIn users say their feed shows them content they find irrelevant. (Source: user surveys, LinkedIn transparency reports)</div>
+    </div>
+
+    <div class="box box-blue" style="margin-bottom:12px;">
+      <div class="box-label">Job Search</div>
+      <div class="box-text"><strong>~30%</strong> of job listings on LinkedIn are estimated to be filled or expired at the time of application. Users have no way to tell.</div>
+    </div>
+
+    <div class="box box-blue" style="margin-bottom:12px;">
+      <div class="box-label">Notifications</div>
+      <div class="box-text">LinkedIn sends an average of <strong>12-18 push notifications/week</strong> per active user. Open rates have declined steadily as content quality has dropped.</div>
+    </div>
+
+    <div class="box" style="margin-bottom:0;">
+      <div class="box-label">The Opportunity</div>
+      <div class="box-text">LinkedIn has more professional context per user than any other platform. Skills, experience, connections, job history, content consumed. It uses a fraction of that data to personalise the experience. That gap is the product opportunity.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FULL WIDTH: SOLUTIONS -->
+<div class="full-section">
+  <div class="kicker">The Improvements</div>
+  <div class="headline">Three Changes. <span>One Direction.</span></div>
+  <p style="max-width:640px;margin-bottom:40px;">Each of these is an independent improvement — they can be shipped and tested separately. But they all point at the same thing: a platform that uses what it knows about you to filter the noise, not amplify it.</p>
+
+  <!-- SOLUTION 1 -->
+  <div class="solution-wrap">
+    <div class="solution-num-row">
+      <div class="sn-num">1</div>
+      <div class="sn-title">Feed Mode: <span>Connections First</span></div>
+      <div class="sn-type">Feed Algorithm<br>P1 Priority</div>
+    </div>
+    <div class="sol-grid">
+      <div>
+        <p>Add a persistent toggle — two modes, always visible at the top of the feed. <strong>"For You"</strong> (current algorithm, reach-weighted, discovery-oriented) and <strong>"Connections"</strong> (chronological or near-chronological, first and second degree only).</p>
+        <p>This isn't a new idea — Twitter/X implemented it, Instagram offers it. But LinkedIn hasn't, despite having a stronger rationale for it. The professional context of a first-degree connection update — a job change, a project launch, a career milestone — is almost always more relevant to a user than a viral post from a stranger in the same industry.</p>
+        <p>The Connections feed should surface: job changes, posts from direct connections, company updates from companies a user's connections work at, and content their connections have commented on (with context). Not likes — comments. A comment requires a formed opinion. A like requires a thumb.</p>
+        <div class="box box-grn">
+          <div class="box-label">Why This Matters for LinkedIn's Business</div>
+          <div class="box-text"><strong>Counter-intuitive but true:</strong> a feed users trust generates more return visits than a feed they feel manipulated by. Short-term engagement metrics might dip. Long-term daily active users and session depth should improve. The bet is on quality over volume.</div>
+        </div>
+      </div>
+      <div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Type</div>
+          <div class="sol-meta-val">Algorithm + UI change</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Effort</div>
+          <div class="sol-meta-val">Medium — toggle UI is simple; feed re-ranking needs work</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Primary Metric</div>
+          <div class="sol-meta-val">Feed session depth (scroll + dwell) for users who switch to Connections mode</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Secondary</div>
+          <div class="sol-meta-val">D30 retention for Connections mode users vs For You</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Risk</div>
+          <div class="sol-meta-val">Creator ecosystem pushback. Smaller accounts lose reach if users migrate to Connections feed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLUTION 2 -->
+  <div class="solution-wrap">
+    <div class="solution-num-row">
+      <div class="sn-num">2</div>
+      <div class="sn-title">Job Listings: <span>Freshness & Fit Score</span></div>
+      <div class="sn-type">Job Search<br>P1 Priority</div>
+    </div>
+    <div class="sol-grid">
+      <div>
+        <p>Two changes to job listings, shipped together because each reinforces the other.</p>
+        <p><strong>Freshness signal:</strong> Show a clear age indicator on every listing — not just "Posted 3 weeks ago" but a colour-coded freshness badge. Green: posted in the last 7 days. Amber: 8-21 days. Red: 22+ days, with a warning that the role may have been filled. For roles over 30 days old with no recruiter activity, add a "This listing may be expired" flag. LinkedIn has this data — recruiter logins, listing view counts, application-to-response rates. Surface it.</p>
+        <p><strong>Fit score:</strong> A percentage match displayed on each listing, derived from the user's profile (skills, experience level, location, past roles) against the job description requirements. Not a black box "Easy Apply" badge — an actual breakdown: "You match 7 of 9 required skills. Missing: Python, 3+ years of management experience." This turns job search from a guessing game into an informed decision.</p>
+        <div class="box box-blue">
+          <div class="box-label">The Trust Angle</div>
+          <div class="box-text"><strong>Ghost jobs are LinkedIn's biggest trust problem.</strong> When users apply to 40 jobs and hear nothing back, they don't blame the companies — they blame the platform. A freshness signal that helps users avoid expired listings directly improves the experience of job searching on LinkedIn, even without changing anything else.</div>
+        </div>
+      </div>
+      <div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Type</div>
+          <div class="sol-meta-val">Data surface + UI change</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Effort</div>
+          <div class="sol-meta-val">Medium-high — fit score algorithm, freshness data pipeline</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Primary Metric</div>
+          <div class="sol-meta-val">Application-to-response rate (signal of application quality improving)</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Secondary</div>
+          <div class="sol-meta-val">Time spent on job search per session (should decrease — fewer wasted applications)</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Risk</div>
+          <div class="sol-meta-val">Recruiters may object to freshness flags deprioritising their old listings. Needs careful rollout with recruiter communication.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLUTION 3 -->
+  <div class="solution-wrap">
+    <div class="solution-num-row">
+      <div class="sn-num">3</div>
+      <div class="sn-title">Notification Triage: <span>Signal vs. Noise</span></div>
+      <div class="sn-type">Notifications<br>P2 Priority</div>
+    </div>
+    <div class="sol-grid">
+      <div>
+        <p>Redesign the notification stack around a simple two-tier model: <strong>Actions</strong> and <strong>Updates.</strong></p>
+        <p><strong>Actions</strong> are notifications that require something from the user — a recruiter message, a connection request with a personalised note, a comment that asks them a direct question, a job application status change. These appear prominently, with a push notification, because they represent real professional interactions.</p>
+        <p><strong>Updates</strong> are everything else — profile views, post impressions, work anniversaries, generic "your post did well" alerts. These get batched into a once-daily digest, delivered at a time the user chooses, with no push notification. Just a quiet in-app badge.</p>
+        <p>The AI layer makes this smarter over time: if a user consistently ignores work anniversary notifications but always opens recruiter messages, the system learns to weight future notifications accordingly. Personalised noise reduction, not one-size-fits-all.</p>
+        <div class="box">
+          <div class="box-label">Precedent</div>
+          <div class="box-text">Gmail's Priority Inbox (2010) proved that users prefer fewer, smarter notifications to more frequent, dumb ones. LinkedIn has the professional context to do this better than any consumer email product. It just hasn't prioritised it.</div>
+        </div>
+      </div>
+      <div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Type</div>
+          <div class="sol-meta-val">Notification architecture + ML layer</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Effort</div>
+          <div class="sol-meta-val">Medium — classification model, digest UI, preference settings</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Primary Metric</div>
+          <div class="sol-meta-val">Notification open rate for Action-tier alerts (target: significant increase vs. current undifferentiated stack)</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Secondary</div>
+          <div class="sol-meta-val">Push notification opt-out rate (target: decrease)</div>
+        </div>
+        <div class="sol-meta-item">
+          <div class="sol-meta-label">Risk</div>
+          <div class="sol-meta-val">Reducing notification volume may impact DAU in the short term. Short-term metric dip for long-term trust gain.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIMENT + METRICS -->
+<div class="full-section">
+  <div class="kicker">Testing & Measurement</div>
+  <div class="headline">How to <span>Know if It's Working</span></div>
+
+  <p style="max-width:640px;margin-bottom:28px;">Each of these ships as an A/B test before full rollout. The table below lays out the test design for the highest-priority improvement — Feed Mode.</p>
+
+  <table class="exp-table">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Control</th>
+        <th>Treatment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Feature</td>
+        <td>Current single-mode algorithmic feed</td>
+        <td>Two-mode feed toggle — "For You" + "Connections"</td>
+      </tr>
+      <tr>
+        <td>Sample</td>
+        <td>50% of new users in a single market (India)</td>
+        <td>50% of new users, same market, same cohort</td>
+      </tr>
+      <tr>
+        <td>Duration</td>
+        <td colspan="2">6 weeks minimum — need 3+ full usage cycles to see retention signal</td>
+      </tr>
+      <tr>
+        <td>Primary success</td>
+        <td colspan="2">Treatment group D30 retention ≥ control. Session depth (dwell time) increases for users who switch to Connections mode.</td>
+      </tr>
+      <tr>
+        <td>Kill criteria</td>
+        <td colspan="2">If content creator engagement drops >20% with no retention offset, pause and redesign Connections feed curation logic.</td>
+      </tr>
+      <tr>
+        <td>What we're not measuring</td>
+        <td colspan="2">Short-term engagement (likes, comments) on For You feed. These may drop and that's acceptable if retention improves.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="metrics-strip">
+    <div class="metric-cell">
+      <div class="mc-val">D30</div>
+      <div class="mc-name">Retention</div>
+      <div class="mc-desc">Primary success signal for Feed Mode. Target: improvement vs. control cohort.</div>
+    </div>
+    <div class="metric-cell">
+      <div class="mc-val">App→Reply</div>
+      <div class="mc-name">Application Response Rate</div>
+      <div class="mc-desc">Measures if freshness + fit score reduces ghost job applications.</div>
+    </div>
+    <div class="metric-cell">
+      <div class="mc-val">Open %</div>
+      <div class="mc-name">Action Notification CTR</div>
+      <div class="mc-desc">Should rise significantly when notifications are tiered — signal stands out from noise.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="full-section" style="border-top:3px solid var(--ink);">
+  <div class="headline" style="max-width:640px;">LinkedIn Knows More About You Than Almost Any Product. It Should Act Like It.</div>
+  <p style="max-width:640px;margin-top:16px;">The frustrating thing about LinkedIn's product gaps isn't that they're hard to fix. It's that the data to fix them already exists. LinkedIn knows your skills, your experience, your connections, your career history, what content you engage with, what jobs you apply for. It uses maybe 20% of that signal to personalise your experience.</p>
+  <p style="max-width:640px;">The three improvements here are all versions of the same idea: use what you know. A feed that surfaces your actual network. Job listings that tell you whether they're worth applying to. Notifications that respect your attention. None of this requires new data. It requires a product philosophy that prioritises the user's time over the platform's short-term engagement numbers.</p>
+  <p style="max-width:640px;">That's a harder internal sell than a new feature. But it's the one that builds a product people actually trust — and trust, in professional networking, is the whole game.</p>
+</div>
+
+<a class="back" href="javascript:history.back()">← Back to Portfolio</a>
+
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groww Teardown — Shreyas Pandit</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#FFFFFF;
+  --off:#F8F9FA;
+  --border:#E8EAED;
+  --border2:#D1D5DB;
+  --ink:#0D1117;
+  --ink2:#24292F;
+  --ink3:#57606A;
+  --ink4:#8C959F;
+  --teal:#007A6E;
+  --teal-light:#E6F4F2;
+  --teal-mid:#00A896;
+  --red:#B91C1C;
+  --red-light:#FEF2F2;
+  --amber:#92400E;
+  --amber-light:#FFFBEB;
+  --font-d:'DM Serif Display',serif;
+  --font-b:'IBM Plex Sans',sans-serif;
+  --font-m:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.65;overflow-x:hidden}
+
+/* ── TOP BAR ── */
+.topbar{
+  background:var(--teal);
+  padding:10px 56px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.topbar-label{
+  font-family:var(--font-m);
+  font-size:10px;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.7);
+}
+.topbar-tag{
+  font-family:var(--font-m);
+  font-size:10px;color:rgba(255,255,255,0.9);
+  background:rgba(255,255,255,0.12);
+  padding:3px 10px;border-radius:2px;
+  letter-spacing:0.05em;
+}
+
+/* ── HERO ── */
+.hero{
+  padding:64px 56px 48px;
+  border-bottom:1px solid var(--border);
+  max-width:1060px;
+}
+.hero-eyebrow{
+  font-family:var(--font-m);
+  font-size:11px;color:var(--teal);
+  letter-spacing:0.08em;margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{
+  content:'';display:block;
+  width:32px;height:1px;background:var(--teal);
+}
+.hero-title{
+  font-family:var(--font-d);
+  font-size:clamp(40px,5.5vw,72px);
+  line-height:1.05;letter-spacing:-0.02em;
+  color:var(--ink);margin-bottom:20px;
+}
+.hero-title em{font-style:italic;color:var(--teal);}
+.hero-deck{
+  font-size:17px;font-weight:300;
+  color:var(--ink3);line-height:1.7;
+  max-width:620px;margin-bottom:36px;
+}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;}
+.chip{
+  font-family:var(--font-m);
+  font-size:11px;padding:5px 12px;
+  border:1px solid var(--border2);
+  border-radius:3px;color:var(--ink3);
+}
+.chip.teal{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+
+/* ── LAYOUT ── */
+.layout{
+  display:grid;
+  grid-template-columns:200px 1fr;
+  max-width:1060px;
+  border-right:1px solid var(--border);
+}
+.toc{
+  position:sticky;top:0;height:100vh;
+  border-right:1px solid var(--border);
+  padding:32px 0;
+  overflow-y:auto;
+}
+.toc-label{
+  font-family:var(--font-m);
+  font-size:9px;font-weight:500;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--ink4);padding:0 20px;margin-bottom:12px;
+}
+.toc-link{
+  display:block;padding:7px 20px;
+  font-size:12px;color:var(--ink3);
+  text-decoration:none;border-left:2px solid transparent;
+  transition:all 0.15s;line-height:1.4;
+}
+.toc-link:hover{color:var(--teal);border-left-color:var(--teal);background:var(--teal-light);}
+.toc-link.active{color:var(--teal);border-left-color:var(--teal);font-weight:500;}
+.toc-divider{height:1px;background:var(--border);margin:12px 20px;}
+
+.content{padding:48px 56px;}
+
+/* ── SCORE CARD ── */
+.scorecard{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:48px;
+}
+.score-cell{
+  background:var(--white);
+  padding:20px 20px;
+}
+.score-val{
+  font-family:var(--font-d);
+  font-size:36px;line-height:1;
+  margin-bottom:4px;
+}
+.score-val.positive{color:var(--teal);}
+.score-val.negative{color:var(--red);}
+.score-val.neutral{color:var(--amber);}
+.score-label{
+  font-family:var(--font-m);
+  font-size:10px;color:var(--ink4);
+  letter-spacing:0.06em;text-transform:uppercase;
+  line-height:1.4;
+}
+
+/* ── TYPOGRAPHY ── */
+.section-break{
+  display:flex;align-items:center;gap:0;
+  margin:52px 0 28px;
+  border-top:1px solid var(--border);
+  padding-top:28px;
+}
+.section-num{
+  font-family:var(--font-m);
+  font-size:11px;color:var(--ink4);
+  margin-right:16px;
+}
+.section-title-text{
+  font-family:var(--font-d);
+  font-size:26px;line-height:1.2;
+  letter-spacing:-0.01em;color:var(--ink);
+}
+.section-title-text em{font-style:italic;color:var(--teal);}
+
+h3{
+  font-family:var(--font-b);
+  font-size:13px;font-weight:600;
+  letter-spacing:0.05em;text-transform:uppercase;
+  color:var(--ink2);margin:28px 0 10px;
+}
+p{
+  font-size:14px;color:var(--ink2);
+  line-height:1.85;margin-bottom:16px;
+}
+p:last-child{margin-bottom:0;}
+strong{color:var(--ink);font-weight:600;}
+
+.lede{
+  font-family:var(--font-d);
+  font-size:19px;font-style:italic;
+  color:var(--ink2);line-height:1.7;
+  margin-bottom:32px;
+  padding:20px 0;
+  border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--border);
+}
+
+.note{
+  background:var(--teal-light);
+  border-left:3px solid var(--teal);
+  padding:14px 18px;margin:20px 0;
+  font-size:13px;color:var(--ink2);line-height:1.75;
+}
+.note strong{color:var(--teal);}
+
+.warn{
+  background:var(--red-light);
+  border-left:3px solid var(--red);
+  padding:14px 18px;margin:20px 0;
+  font-size:13px;color:var(--ink2);line-height:1.75;
+}
+.warn strong{color:var(--red);}
+
+.caution{
+  background:var(--amber-light);
+  border-left:3px solid var(--amber);
+  padding:14px 18px;margin:20px 0;
+  font-size:13px;color:var(--ink2);line-height:1.75;
+}
+.caution strong{color:var(--amber);}
+
+/* ── COMPARISON GRID ── */
+.compare{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin:24px 0;
+}
+.compare-col{background:var(--white);padding:20px 22px;}
+.compare-head{
+  font-family:var(--font-m);
+  font-size:10px;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding-bottom:12px;border-bottom:1px solid var(--border);
+  margin-bottom:14px;
+}
+.compare-head.good{color:var(--teal);}
+.compare-head.bad{color:var(--red);}
+.compare-item{
+  font-size:13px;color:var(--ink3);
+  line-height:1.6;margin-bottom:10px;
+  padding-left:14px;position:relative;
+}
+.compare-item::before{
+  content:'';position:absolute;left:0;top:7px;
+  width:5px;height:5px;border-radius:50%;
+}
+.compare-item.good::before{background:var(--teal);}
+.compare-item.bad::before{background:var(--red);}
+
+/* ── INSIGHT CARDS ── */
+.insight-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin:24px 0;
+}
+.insight-card{
+  border:1px solid var(--border);
+  padding:18px 20px;
+  background:var(--off);
+}
+.insight-label{
+  font-family:var(--font-m);
+  font-size:9px;font-weight:500;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:8px;
+}
+.insight-text{
+  font-size:13px;color:var(--ink2);
+  line-height:1.6;
+}
+
+/* ── RECOMMENDATION TABLE ── */
+.rec-table{
+  width:100%;border-collapse:collapse;
+  margin:24px 0;font-size:13px;
+  border:1px solid var(--border);
+}
+.rec-table th{
+  font-family:var(--font-m);
+  font-size:9px;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--ink4);padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  background:var(--off);text-align:left;
+}
+.rec-table td{
+  padding:14px 14px;
+  border-bottom:1px solid var(--border);
+  color:var(--ink2);line-height:1.55;
+  vertical-align:top;
+}
+.rec-table tr:last-child td{border-bottom:none;}
+.pill{
+  font-family:var(--font-m);
+  font-size:10px;padding:2px 8px;
+  border-radius:2px;white-space:nowrap;
+}
+.pill-high{background:var(--teal-light);color:var(--teal);}
+.pill-med{background:var(--amber-light);color:var(--amber);}
+.pill-low{background:var(--off);color:var(--ink4);border:1px solid var(--border);}
+
+/* ── MONO HIGHLIGHT ── */
+.mono{
+  font-family:var(--font-m);
+  font-size:12px;
+  background:var(--off);
+  border:1px solid var(--border);
+  padding:12px 16px;margin:16px 0;
+  color:var(--ink2);line-height:1.7;
+}
+
+/* ── BACK ── */
+.back-link{
+  display:block;
+  padding:24px 56px;
+  border-top:1px solid var(--border);
+  font-family:var(--font-m);
+  font-size:11px;color:var(--teal);
+  text-decoration:none;letter-spacing:0.06em;
+}
+
+@media(max-width:768px){
+  .topbar,.hero,.content,.back-link{padding-left:24px;padding-right:24px;}
+  .layout{grid-template-columns:1fr;}
+  .toc{display:none;}
+  .scorecard{grid-template-columns:1fr 1fr;}
+  .compare,.insight-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-label">Product Teardown — Fintech / Investing</div>
+  <div class="topbar-tag">Shreyas Pandit · Active User</div>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Teardown No. 02</div>
+  <h1 class="hero-title">Groww Made Investing <em>Effortless.</em><br>That's Also Its Biggest Problem.</h1>
+  <p class="hero-deck">Groww's simplicity is a genuine product achievement. It brought millions of first-time investors into the market. But somewhere between the clean onboarding and the cheerful UI, the product forgot to grow with its users.</p>
+  <div class="hero-chips">
+    <span class="chip teal">Fintech</span>
+    <span class="chip">Retention</span>
+    <span class="chip">User Maturity</span>
+    <span class="chip">Investment UX</span>
+    <span class="chip">Growth Ceiling</span>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="toc">
+    <div class="toc-label">Contents</div>
+    <a class="toc-link active" href="#context">Context & Lens</a>
+    <a class="toc-link" href="#what-works">What Works</a>
+    <div class="toc-divider"></div>
+    <a class="toc-link" href="#simplicity-trap">The Simplicity Trap</a>
+    <a class="toc-link" href="#user-maturity">The Maturity Gap</a>
+    <a class="toc-link" href="#discovery">Discovery Problem</a>
+    <div class="toc-divider"></div>
+    <a class="toc-link" href="#fixes">What I'd Fix</a>
+    <a class="toc-link" href="#verdict">Final Take</a>
+  </nav>
+
+  <div class="content">
+
+    <!-- SCORECARD -->
+    <div class="scorecard">
+      <div class="score-cell">
+        <div class="score-val positive">9/10</div>
+        <div class="score-label">Onboarding Experience</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-val positive">8/10</div>
+        <div class="score-label">First Purchase Flow</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-val negative">4/10</div>
+        <div class="score-label">Advanced User Support</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-val neutral">5/10</div>
+        <div class="score-label">Long-term Retention</div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: CONTEXT -->
+    <div id="context">
+      <p class="lede">I've been using Groww for two years. Started with SIPs, moved into direct equity, experimented with F&O briefly, came back to mutual funds. I've watched the product improve in some ways and stagnate in others. Here's my honest read.</p>
+
+      <p>Groww entered a market dominated by apps that looked like they were built in 2009. Cluttered dashboards, confusing jargon, forms that felt like tax filings. Its bet was simple: <strong>if we make this feel like a consumer app, people will actually use it.</strong> That bet paid off. Groww grew to 10M+ users faster than almost any fintech in India.</p>
+
+      <p>But there's a problem with winning on simplicity — at some point your users get smarter, and your product has to get smarter with them. That's where Groww is stuck.</p>
+    </div>
+
+    <!-- SECTION 2: WHAT WORKS -->
+    <div id="what-works">
+      <div class="section-break">
+        <div class="section-num">01 —</div>
+        <div class="section-title-text">What Groww <em>Actually Gets Right</em></div>
+      </div>
+
+      <p>Before the critique, the credit. Groww's onboarding is the best in the Indian fintech space. KYC to first investment in under 10 minutes. Clear language — "this is a mutual fund, here's what that means, here's what your money will do." No intimidating terminology before the user is ready for it. No dark patterns pushing demat accounts on people who just want a SIP.</p>
+
+      <div class="compare">
+        <div class="compare-col">
+          <div class="compare-head good">What Groww Gets Right</div>
+          <div class="compare-item good">Onboarding removes every possible friction point</div>
+          <div class="compare-item good">Category labels written in plain Hindi-English — no jargon walls</div>
+          <div class="compare-item good">SIP setup is genuinely 3 taps</div>
+          <div class="compare-item good">Portfolio view is clean and readable at a glance</div>
+          <div class="compare-item good">Returns are shown prominently — makes users feel good</div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-head bad">Where It Falls Short</div>
+          <div class="compare-item bad">No progression path for users who want more depth</div>
+          <div class="compare-item bad">Fund comparison is weak — surface-level metrics only</div>
+          <div class="compare-item bad">Stock analysis tools are cosmetic, not analytical</div>
+          <div class="compare-item bad">No educational content that grows with the user</div>
+          <div class="compare-item bad">Notifications are marketing, not intelligence</div>
+        </div>
+      </div>
+
+      <p>The portfolio view deserves specific praise. Absolute returns, XIRR, invested vs current value — all visible without digging. That's a product decision. Most apps hide XIRR because it can look worse than absolute returns for short-term holders. Groww shows it anyway. That's honest.</p>
+    </div>
+
+    <!-- SECTION 3: SIMPLICITY TRAP -->
+    <div id="simplicity-trap">
+      <div class="section-break">
+        <div class="section-num">02 —</div>
+        <div class="section-title-text">The <em>Simplicity Trap</em></div>
+      </div>
+
+      <p>There's a version of simplicity that's a philosophy and a version that's a ceiling. Groww started with the former and drifted into the latter.</p>
+
+      <p>When I search for a mutual fund on Groww, I see the fund name, 1Y/3Y/5Y returns, and a rating. That's it. I can't filter by expense ratio, exit load, fund manager track record, portfolio overlap with funds I already hold, or volatility profile. I can't compare two funds side by side with any meaningful analytical depth.</p>
+
+      <div class="warn">
+        <strong>The miss:</strong> Groww designed its discovery experience for a user who doesn't know what they're doing. That's the right user to design for on day one. But it never built a second experience for the user who's been investing for 18 months and wants to make smarter decisions. That user currently leaves the app, does research on Morningstar or ValueResearch, then comes back to execute. Groww is capturing the transaction but losing the relationship.
+      </div>
+
+      <p>I've done this myself. Countless times. I open Groww, see a fund, want to understand it better, open Chrome, look it up externally, close Chrome, come back to Groww to buy. That round-trip is an indictment of the product's depth. The research phase should never leave the app.</p>
+
+      <div class="mono">
+        User journey today:
+        Groww → external research → Groww (to buy)
+
+        User journey it should be:
+        Groww → Groww → Groww
+      </div>
+    </div>
+
+    <!-- SECTION 4: USER MATURITY -->
+    <div id="user-maturity">
+      <div class="section-break">
+        <div class="section-num">03 —</div>
+        <div class="section-title-text">The User <em>Maturity Gap</em></div>
+      </div>
+
+      <p>Groww's user base has aged. The people who signed up in 2020-21 during the bull run are now two to four years into their investing journey. Many of them have outgrown what the app can teach them. But the product hasn't built a path for what comes next.</p>
+
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-label">Beginner User (Year 1)</div>
+          <div class="insight-text">Needs: simple language, guided decisions, low stakes. Groww serves this user <strong>exceptionally well.</strong></div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-label">Intermediate User (Year 2+)</div>
+          <div class="insight-text">Needs: analytical tools, fund comparison, portfolio overlap detection. Groww <strong>does not serve this user.</strong></div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-label">Engaged Equity Trader</div>
+          <div class="insight-text">Needs: screeners, technical indicators, watchlist depth. Groww's equity tools are <strong>cosmetic at best.</strong></div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-label">Goal-Based Investor</div>
+          <div class="insight-text">Needs: projected corpus, scenario modelling, goal tracking. Groww has a goals feature that <strong>barely works.</strong></div>
+        </div>
+      </div>
+
+      <p>The goals feature is the clearest example of this gap. Groww lets you label an SIP with a goal — "Home," "Retirement," "Child's education." But it doesn't model whether your current contributions will actually get you there. There's no projection engine, no scenario modelling, no "at this rate, here's when you'll reach your goal." It's a label on a transaction, not a financial planning tool.</p>
+
+      <div class="note">
+        <strong>The opportunity:</strong> Groww already has all the data it needs to build a genuinely useful goal-tracking experience. Investment history, SIP schedules, fund performance. The product surface just doesn't exist. This is a roadmap and prioritisation failure, not a data or technical constraint.
+      </div>
+    </div>
+
+    <!-- SECTION 5: DISCOVERY -->
+    <div id="discovery">
+      <div class="section-break">
+        <div class="section-num">04 —</div>
+        <div class="section-title-text">The <em>Discovery Problem</em></div>
+      </div>
+
+      <p>Groww's notifications are almost entirely marketing. New fund NFO. Referral bonus. "Markets are up 2% today." Nothing that feels like it was written for me specifically — nothing that uses the fact that it knows my portfolio, my SIP amounts, my holding period, my risk profile.</p>
+
+      <p>Imagine instead: "Your Axis Bluechip SIP is 14 months old. The fund has underperformed its benchmark for the last 3 quarters. Here's what that means and what similar investors have done." Or: "You have ₹8,400 sitting idle in your Groww wallet. At your current allocation profile, here's where it might fit."</p>
+
+      <p>That's not sci-fi. That's just using the data Groww already has to build an intelligent nudge layer. The gap between what Groww knows about me and what it communicates to me is enormous. Every push notification is a missed opportunity to demonstrate that the product is paying attention.</p>
+
+      <div class="caution">
+        <strong>The competitive risk:</strong> Zerodha, Kuvera, and INDMoney are all building toward this intelligence layer — personalised insights, portfolio analysis, advisor-quality nudges at scale. If Groww stays in "simple consumer app" mode while competitors build genuine financial intelligence tools, its best users will migrate upward. The users who stay will be the ones with the least engagement and the lowest LTV.
+      </div>
+    </div>
+
+    <!-- SECTION 6: FIXES -->
+    <div id="fixes">
+      <div class="section-break">
+        <div class="section-num">05 —</div>
+        <div class="section-title-text">What <em>I'd Fix</em></div>
+      </div>
+
+      <table class="rec-table">
+        <thead>
+          <tr>
+            <th>Recommendation</th>
+            <th>Problem It Solves</th>
+            <th>Metric</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Fund Intelligence Layer</strong><br><span style="font-size:12px;color:var(--ink4);">Deep fund pages with expense ratio, overlap detection, fund manager history, side-by-side comparison</span></td>
+            <td>Users leaving app to research externally. Research-to-purchase gap.</td>
+            <td>Session depth, research → purchase conversion</td>
+            <td><span class="pill pill-high">P1</span></td>
+          </tr>
+          <tr>
+            <td><strong>Goal Projection Engine</strong><br><span style="font-size:12px;color:var(--ink4);">Corpus modelling for each goal — "at current rate, you'll reach ₹X by Y date"</span></td>
+            <td>Goals feature is a label, not a tool. No retention value.</td>
+            <td>Goal feature engagement, SIP continuation rate</td>
+            <td><span class="pill pill-high">P1</span></td>
+          </tr>
+          <tr>
+            <td><strong>Portfolio Health Digest</strong><br><span style="font-size:12px;color:var(--ink4);">Weekly personalised summary — underperformers flagged, rebalancing suggestions, fund-level insights</span></td>
+            <td>Notifications are generic marketing. No intelligence layer.</td>
+            <td>Push notification open rate, weekly active users</td>
+            <td><span class="pill pill-med">P2</span></td>
+          </tr>
+          <tr>
+            <td><strong>Investor Mode Toggle</strong><br><span style="font-size:12px;color:var(--ink4);">Let users opt into advanced view — more data, more context, more analytical tools</span></td>
+            <td>Intermediate users outgrowing the product. Simplicity ceiling.</td>
+            <td>D30 retention for users >12 months on platform</td>
+            <td><span class="pill pill-med">P2</span></td>
+          </tr>
+          <tr>
+            <td><strong>Fund Overlap Detector</strong><br><span style="font-size:12px;color:var(--ink4);">Show users when two funds in their portfolio hold the same top stocks</span></td>
+            <td>Users unknowingly holding correlated risk across funds.</td>
+            <td>Portfolio diversification score, trust metric</td>
+            <td><span class="pill pill-low">P3</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 7: VERDICT -->
+    <div id="verdict">
+      <div class="section-break">
+        <div class="section-num">06 —</div>
+        <div class="section-title-text">Final <em>Take</em></div>
+      </div>
+
+      <p>Groww built the best onramp into investing that India has ever had. That's a real achievement, and it shouldn't be minimised. The product moved an entire generation of first-time investors from intimidation to action. That's hard. Most products don't manage it.</p>
+
+      <p>The challenge now is the highway after the onramp. Groww got millions of users into the car. But the road it built only goes for about 12 months before it runs out. The users who want to keep going — who want to understand their portfolio better, make smarter decisions, build toward real financial goals — currently have to get off the highway and find their own path.</p>
+
+      <p><strong>The product Groww needs to build next isn't a new product — it's a deeper version of the one that already exists.</strong> The same clean interface, but with more intelligence underneath. The same simple language, but for more complex questions. Not a pivot. An evolution.</p>
+
+      <p>The users are ready. The question is whether Groww's product roadmap is.</p>
+    </div>
+
+  </div>
+</div>
+
+<a class="back-link" href="javascript:history.back()">← Back to Portfolio</a>
+
+<script>
+// TOC active state on scroll
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.toc-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>

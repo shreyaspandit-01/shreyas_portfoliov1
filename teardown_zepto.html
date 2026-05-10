@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zepto — Product Teardown</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F8F7F4;
+  --white: #FFFFFF;
+  --border: #E2DDD6;
+  --border2: #CBC5BC;
+  --ink: #18160F;
+  --ink2: #2E2B22;
+  --ink3: #6B6760;
+  --ink4: #A8A49C;
+  --purple: #4B23A0;
+  --purp2: #6B3FC8;
+  --purp-bg: #F0EBFC;
+  --purp-bdr: #C5B0EE;
+  --orange: #B84E00;
+  --org-bg: #FEF0E4;
+  --green: #1A6B3C;
+  --grn-bg: #E8F5EE;
+  --font-h: 'Inter', sans-serif;
+  --font-s: 'Fraunces', serif;
+  --font-m: 'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-h); font-size: 14px; line-height: 1.7; }
+
+/* ── TOP HEADER ── */
+.top-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 60px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.th-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.th-type {
+  font-family: var(--font-m);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--purple);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.th-sep { color: var(--border2); font-size: 12px; }
+.th-title {
+  font-family: var(--font-m);
+  font-size: 11px;
+  color: var(--ink3);
+  letter-spacing: 0.04em;
+}
+.th-right {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: var(--ink4);
+  letter-spacing: 0.06em;
+}
+
+/* ── HERO BLOCK ── */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 64px 60px 56px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 80px;
+  align-items: start;
+}
+.hero-main {}
+.hero-label {
+  font-family: var(--font-m);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--purple);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--purple);
+}
+.hero-h1 {
+  font-family: var(--font-s);
+  font-size: clamp(36px, 4.5vw, 58px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--ink3);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+.hero-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  font-family: var(--font-m);
+  font-size: 10px;
+  padding: 4px 12px;
+  border: 1px solid var(--border2);
+  color: var(--ink3);
+  border-radius: 2px;
+}
+.chip.purple { background: var(--purp-bg); border-color: var(--purp-bdr); color: var(--purple); }
+
+/* Hero sidebar */
+.hero-side {
+  padding-top: 8px;
+}
+.hs-block {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  margin-bottom: 12px;
+}
+.hs-block:last-child { margin-bottom: 0; }
+.hs-label {
+  font-family: var(--font-m);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--ink4);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.hs-rows { padding: 4px 0; }
+.hs-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+.hs-row-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.dot-green { background: var(--green); }
+.dot-orange { background: var(--orange); }
+
+/* ── CONTENT WRAPPER ── */
+.content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 60px;
+}
+
+/* ── SECTION HEADERS ── */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.sec-num {
+  font-family: var(--font-m);
+  font-size: 11px;
+  color: var(--ink4);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+.sec-title {
+  font-family: var(--font-s);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.15;
+}
+.sec-divider { margin: 56px 0 0; }
+
+/* ── BODY TEXT ── */
+p {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.9;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+
+/* ── CALLOUTS ── */
+.callout {
+  padding: 16px 20px;
+  margin: 24px 0;
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.8;
+  border-left: 3px solid var(--purple);
+  background: var(--purp-bg);
+}
+.callout.orange { border-left-color: var(--orange); background: var(--org-bg); }
+.callout.green { border-left-color: var(--green); background: var(--grn-bg); }
+.callout strong { color: var(--purple); }
+.callout.orange strong { color: var(--orange); }
+.callout.green strong { color: var(--green); }
+
+/* ── PULL QUOTE ── */
+.pullquote {
+  font-family: var(--font-s);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.5;
+  padding: 24px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--border);
+  margin: 36px 0;
+}
+
+/* ── FRICTION TABLE ── */
+.friction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border: 1px solid var(--border);
+}
+.friction-table th {
+  font-family: var(--font-m);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  padding: 10px 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.friction-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--ink2);
+  vertical-align: top;
+  line-height: 1.6;
+}
+.friction-table tr:last-child td { border-bottom: none; }
+.friction-table tr:hover td { background: var(--white); }
+.friction-table td:first-child { font-weight: 500; color: var(--ink); }
+.sev {
+  font-family: var(--font-m);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.sev-h { background: var(--purp-bg); color: var(--purple); }
+.sev-m { background: var(--org-bg); color: var(--orange); }
+.sev-l { background: var(--grn-bg); color: var(--green); }
+
+/* ── FIX CARDS ── */
+.fix-stack { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+.fix-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+}
+.fix-card-top {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fix-label {
+  font-family: var(--font-m);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--purple);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.fix-impact {
+  font-family: var(--font-m);
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+.fix-impact.high { background: var(--purp-bg); color: var(--purple); }
+.fix-impact.med { background: var(--org-bg); color: var(--orange); }
+.fix-card-body { padding: 18px 20px; }
+.fix-card-title {
+  font-family: var(--font-h);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.fix-card-desc {
+  font-size: 13px;
+  color: var(--ink3);
+  line-height: 1.8;
+}
+.fix-card-metric {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-m);
+  font-size: 11px;
+  color: var(--ink4);
+}
+.fix-card-metric span { color: var(--ink2); font-weight: 500; }
+
+/* ── SUMMARY ROW ── */
+.summary {
+  background: var(--ink);
+  margin-top: 0;
+  padding: 48px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.sum-label {
+  font-family: var(--font-m);
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.sum-text {
+  font-family: var(--font-s);
+  font-size: 22px;
+  font-weight: 400;
+  color: white;
+  line-height: 1.45;
+}
+.sum-ratings { display: flex; flex-direction: column; gap: 0; }
+.sum-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sum-row:last-child { border-bottom: none; }
+.sum-row-label {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.06em;
+}
+.sum-row-val {
+  font-size: 12px;
+  font-weight: 500;
+}
+.val-good { color: #6EE7B7; }
+.val-bad { color: #FCA5A5; }
+.val-mid { color: #FCD34D; }
+
+/* ── BACK ── */
+.back-bar {
+  padding: 20px 60px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+.back-link {
+  font-family: var(--font-m);
+  font-size: 11px;
+  color: var(--purple);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 768px) {
+  .top-header { padding: 0 24px; }
+  .hero { grid-template-columns: 1fr; padding: 40px 24px; gap: 36px; }
+  .content { padding: 40px 24px; }
+  .summary { grid-template-columns: 1fr; padding: 40px 24px; gap: 36px; }
+  .back-bar { padding: 20px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP HEADER -->
+<div class="top-header">
+  <div class="th-left">
+    <span class="th-type">Product Teardown</span>
+    <span class="th-sep">·</span>
+    <span class="th-title">Zepto — Quick Commerce</span>
+  </div>
+  <div class="th-right">Shreyas Pandit</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-main">
+    <div class="hero-label">Quick Commerce</div>
+    <h1 class="hero-h1">Zepto Gets You in the Door. Then Stops Trying.</h1>
+    <p class="hero-sub">A deep look at what Zepto does brilliantly, where it quietly loses users, and the three changes it needs to make before someone else makes them first.</p>
+    <div class="hero-chips">
+      <span class="chip purple">Retention</span>
+      <span class="chip">UX Friction</span>
+      <span class="chip">Personalisation</span>
+      <span class="chip">Growth</span>
+    </div>
+  </div>
+  <div class="hero-side">
+    <div class="hs-block">
+      <div class="hs-label">What Works</div>
+      <div class="hs-rows">
+        <div class="hs-row"><div class="hs-row-dot dot-green"></div>10-min delivery — reliably keeps its promise</div>
+        <div class="hs-row"><div class="hs-row-dot dot-green"></div>Dark store model gives real inventory control</div>
+        <div class="hs-row"><div class="hs-row-dot dot-green"></div>Search quality above average</div>
+        <div class="hs-row"><div class="hs-row-dot dot-green"></div>Checkout — fast, clean, no dark patterns</div>
+      </div>
+    </div>
+    <div class="hs-block">
+      <div class="hs-label">What Doesn't</div>
+      <div class="hs-rows">
+        <div class="hs-row"><div class="hs-row-dot dot-orange"></div>Zero repeat-order intelligence</div>
+        <div class="hs-row"><div class="hs-row-dot dot-orange"></div>Home screen optimised for ads, not users</div>
+        <div class="hs-row"><div class="hs-row-dot dot-orange"></div>Silent substitutions discovered at the door</div>
+        <div class="hs-row"><div class="hs-row-dot dot-orange"></div>Retention layer is just discounts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="content">
+
+  <!-- S1 -->
+  <div class="sec-divider">
+    <div class="sec-head">
+      <span class="sec-num">01 —</span>
+      <span class="sec-title">What Zepto Gets Right</span>
+    </div>
+    <p>Start with what's genuinely good. Zepto's core product — 10-minute delivery — actually works. Not sometimes, not on good days. It works reliably enough that you stop thinking of it as impressive and start treating it as baseline. That's the highest form of product trust: when a feature becomes invisible because it just works.</p>
+    <p>The dark store model is the right structural bet. By controlling inventory at the hyperlocal level, Zepto can guarantee availability in a way that Swiggy Instamart and Blinkit can't always match. When you search for something, it's usually in stock. That's logistics as product design.</p>
+    <div class="callout green"><strong>The 10-minute guarantee isn't just a feature — it's a brand promise that organises every downstream decision.</strong> Dark stores, SKU curation, rider density, real-time inventory — all of it exists to protect that one number. When a company aligns itself around one metric this completely, you get genuine product clarity.</div>
+    <p>The search experience is also better than it gets credit for. Query understanding is solid — search "coke" and you get Coca-Cola variants ranked by purchase frequency, not alphabetically. Checkout is equally clean: cart to payment in under 30 seconds for returning users, with no dark patterns or surprise fees at the final screen.</p>
+  </div>
+
+  <!-- S2 -->
+  <div class="sec-divider">
+    <div class="sec-head">
+      <span class="sec-num">02 —</span>
+      <span class="sec-title">Where It Starts to Break</span>
+    </div>
+    <p>Here's what nobody talks about with Zepto: after your 50th order, the product feels exactly the same as it did on your 5th. There is no sense of the app knowing you. No accumulated trust. You are, perpetually, a new user with a purchase history.</p>
+    <p>The same items get reordered week after week. Zepto has never surfaced a single one proactively. No "your usual" shelf, no "you're running low" nudge, no order template. Every session starts from scratch — the same queries, the same categories, the same choices. This is table-stakes personalisation that every major grocery app has been doing for years.</p>
+
+    <div class="pullquote">"The app has months of purchase data and has made almost no product investment in turning that into something a user can actually feel."</div>
+
+    <table class="friction-table">
+      <thead>
+        <tr>
+          <th>Friction Point</th>
+          <th>Where It Happens</th>
+          <th>User Impact</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>No repeat-order intelligence</td>
+          <td>Home screen, browse</td>
+          <td>Users re-search the same items every session. High cognitive load for routine purchases.</td>
+          <td><span class="sev sev-h">High</span></td>
+        </tr>
+        <tr>
+          <td>Discovery broken past basics</td>
+          <td>Home banners, categories</td>
+          <td>No good path beyond usual items. Banner ads dominate the entire discovery surface.</td>
+          <td><span class="sev sev-h">High</span></td>
+        </tr>
+        <tr>
+          <td>Silent substitutions</td>
+          <td>Post-order, delivery</td>
+          <td>Swaps discovered only at the door. No pre-approval flow.</td>
+          <td><span class="sev sev-m">Med</span></td>
+        </tr>
+        <tr>
+          <td>Promo fatigue</td>
+          <td>Home screen, cart</td>
+          <td>Coupon codes, membership nudges, referrals competing for attention at every step.</td>
+          <td><span class="sev sev-m">Med</span></td>
+        </tr>
+        <tr>
+          <td>No order scheduling</td>
+          <td>Checkout</td>
+          <td>Every order is now-or-never. Limits the use case significantly.</td>
+          <td><span class="sev sev-l">Low</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The home screen problem runs deeper than it looks. Count the surfaces on Zepto's home that exist to serve you versus the ones that serve a brand partner. The space where Zepto could demonstrate it knows you is entirely occupied by paid placement.</p>
+    <div class="callout orange"><strong>The miss isn't that Zepto runs ads — it's that ads are the only thing on the home screen.</strong> No personalised shelf, no "based on your last order," no seasonal suggestion tied to purchase history. Every grocery app in a mature market has solved this. Zepto hasn't prioritised it.</div>
+  </div>
+
+  <!-- S3 -->
+  <div class="sec-divider">
+    <div class="sec-head">
+      <span class="sec-num">03 —</span>
+      <span class="sec-title">The Retention Question</span>
+    </div>
+    <p>Zepto's current retention strategy: deliver fast, run discounts. That works until Blinkit or Instamart matches delivery times in a user's locality — and in many areas, they already have. At that point, what keeps a user on Zepto?</p>
+    <p>The answer should be familiarity. A product that has learned your weekly routine. That reminds you when you'd typically reorder something. That gets smarter about your preferences every week. That has basket intelligence — if you buy pasta, it knows to surface parmesan.</p>
+    <div class="callout"><strong>Fast delivery solves acquisition. The personalisation layer solves long-term retention.</strong> Zepto has invested everything in the former and almost nothing in the latter. That's a strategic gap, not an oversight.</div>
+  </div>
+
+  <!-- S4 -->
+  <div class="sec-divider">
+    <div class="sec-head">
+      <span class="sec-num">04 —</span>
+      <span class="sec-title">Three Changes Worth Making</span>
+    </div>
+    <div class="fix-stack">
+
+      <div class="fix-card">
+        <div class="fix-card-top">
+          <span class="fix-label">01 — Smart Basket</span>
+          <span class="fix-impact high">High Impact</span>
+        </div>
+        <div class="fix-card-body">
+          <div class="fix-card-title">Repeat Order Intelligence</div>
+          <div class="fix-card-desc">A persistent shelf on the home screen, pre-populated based on purchase frequency and recency. Not "order again" — smarter. If milk gets bought every 5 days and it's been 4, surface it. If eggs always follow bread, bundle the suggestion. The data exists. The product surface doesn't.</div>
+          <div class="fix-card-metric">Metric — <span>Orders per user per month. Target: 6-8 toward 12+ for habitual users.</span></div>
+        </div>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-top">
+          <span class="fix-label">02 — Substitution Transparency</span>
+          <span class="fix-impact high">High Impact</span>
+        </div>
+        <div class="fix-card-body">
+          <div class="fix-card-title">Pre-approve or Cancel</div>
+          <div class="fix-card-desc">When an item is out of stock after ordering, Zepto currently substitutes silently. The fix: show the proposed swap before the rider leaves the dark store. Give the user 90 seconds to approve, reject, or remove. This eliminates the most common complaint about Zepto across every review forum that exists.</div>
+          <div class="fix-card-metric">Metric — <span>Post-delivery negative ratings and refund request rate.</span></div>
+        </div>
+      </div>
+
+      <div class="fix-card">
+        <div class="fix-card-top">
+          <span class="fix-label">03 — Discovery Mode</span>
+          <span class="fix-impact med">Medium + Long-term</span>
+        </div>
+        <div class="fix-card-body">
+          <div class="fix-card-title">Separate Exploration from Shopping</div>
+          <div class="fix-card-desc">A distinct tab that is explicitly not a shopping surface — no add-to-cart, no price prominence. Recipe-based discovery, seasonal highlights, editorial content about what's fresh. Let users browse without buying pressure. Purchase intent follows naturally. It also creates a content moat that competitors can't copy with logistics alone.</div>
+          <div class="fix-card-metric">Metric — <span>Session length and basket size for users who engage with discovery content.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+  <div>
+    <div class="sum-label">Bottom Line</div>
+    <div class="sum-text">Zepto solved the hard problem first. The delivery infrastructure is real. Now the product layer needs to catch up.</div>
+  </div>
+  <div>
+    <div class="sum-label">How It Rates</div>
+    <div class="sum-ratings">
+      <div class="sum-row"><span class="sum-row-label">Delivery Experience</span><span class="sum-row-val val-good">Best in class</span></div>
+      <div class="sum-row"><span class="sum-row-label">Personalisation</span><span class="sum-row-val val-bad">Essentially absent</span></div>
+      <div class="sum-row"><span class="sum-row-label">Retention Strategy</span><span class="sum-row-val val-bad">Discount-dependent</span></div>
+      <div class="sum-row"><span class="sum-row-label">Discovery Quality</span><span class="sum-row-val val-mid">Ad-heavy, improving</span></div>
+      <div class="sum-row"><span class="sum-row-label">Competitive Moat</span><span class="sum-row-val val-mid">Strong ops, thin product</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a class="back-link" href="javascript:history.back()">← Back to Portfolio</a>
+</div>
+
+</body>
+</html>

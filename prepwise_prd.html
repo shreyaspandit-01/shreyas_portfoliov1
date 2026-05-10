@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrepWise — Product Requirements Document</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAFAFA;
+  --white: #FFFFFF;
+  --border: #E4E4E4;
+  --border2: #CFCFCF;
+  --ink: #161616;
+  --ink2: #282828;
+  --ink3: #606060;
+  --ink4: #A0A0A0;
+  --blue: #0043CE;
+  --blu-bg: #EDF5FF;
+  --blu-bdr: #BAD4FF;
+  --teal: #007D79;
+  --tea-bg: #E5F6F4;
+  --red: #A2191F;
+  --red-bg: #FFF1F1;
+  --yellow: #8E6A00;
+  --yel-bg: #FCF4D6;
+  --font-b: 'IBM Plex Sans', sans-serif;
+  --font-s: 'IBM Plex Serif', serif;
+  --font-m: 'IBM Plex Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-b); font-size: 14px; line-height: 1.7; }
+
+/* ── TOP ── */
+.doc-top {
+  background: var(--ink);
+  padding: 0 64px;
+  height: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.dt-left { display: flex; align-items: center; gap: 16px; }
+.dt-product { font-family: var(--font-m); font-size: 13px; font-weight: 500; color: white; }
+.dt-sep { color: rgba(255,255,255,0.25); }
+.dt-type { font-family: var(--font-m); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; }
+.dt-right { font-family: var(--font-m); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 64px 48px;
+  max-width: 100%;
+}
+.hero-inner { max-width: 900px; }
+.hero-tag { font-family: var(--font-m); font-size: 11px; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+.hero-title { font-family: var(--font-s); font-size: 40px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; line-height: 1.1; }
+.hero-sub { font-size: 16px; font-weight: 300; color: var(--ink3); line-height: 1.75; max-width: 620px; margin-bottom: 36px; }
+.hero-status {
+  display: inline-flex; align-items: center; gap: 32px;
+  border: 1px solid var(--border); padding: 12px 20px;
+  background: var(--bg);
+}
+.hs-item { display: flex; flex-direction: column; gap: 2px; }
+.hs-label { font-family: var(--font-m); font-size: 9px; color: var(--ink4); letter-spacing: 0.12em; text-transform: uppercase; }
+.hs-val { font-size: 13px; font-weight: 500; color: var(--ink2); }
+.hs-val.live { color: var(--teal); }
+.hs-sep { width: 1px; background: var(--border); align-self: stretch; }
+
+/* ── BODY LAYOUT ── */
+.body { display: grid; grid-template-columns: 680px 1fr; gap: 0; max-width: 1100px; margin: 0 auto; }
+.main-col { padding: 48px 64px; border-right: 1px solid var(--border); }
+.aside-col { padding: 48px 32px; position: sticky; top: 48px; height: fit-content; }
+
+/* ── ASIDE ── */
+.aside-label { font-family: var(--font-m); font-size: 10px; color: var(--ink4); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; margin-top: 28px; }
+.aside-label:first-child { margin-top: 0; }
+.toc-link { display: block; font-size: 12px; color: var(--ink3); text-decoration: none; padding: 4px 0 4px 10px; border-left: 2px solid transparent; line-height: 1.4; transition: all 0.15s; }
+.toc-link:hover { color: var(--blue); border-left-color: var(--blue); }
+.toc-link.active { color: var(--blue); border-left-color: var(--blue); font-weight: 500; }
+.aside-block { border: 1px solid var(--border); padding: 14px; margin-top: 28px; background: var(--white); }
+.ab-title { font-family: var(--font-m); font-size: 10px; color: var(--ink4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.ab-item { font-size: 12px; color: var(--ink3); line-height: 1.6; margin-bottom: 6px; padding-left: 10px; position: relative; }
+.ab-item::before { content: '→'; position: absolute; left: 0; color: var(--blue); font-size: 10px; }
+
+/* ── SECTION ── */
+.sect { margin-bottom: 48px; scroll-margin-top: 60px; }
+.sect-id { font-family: var(--font-m); font-size: 10px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+h2 { font-family: var(--font-s); font-size: 24px; font-weight: 500; color: var(--ink); margin-bottom: 16px; line-height: 1.2; letter-spacing: -0.01em; }
+h3 { font-size: 13px; font-weight: 600; color: var(--ink); margin: 24px 0 8px; letter-spacing: 0.01em; }
+h4 { font-family: var(--font-m); font-size: 11px; font-weight: 500; color: var(--ink3); margin: 20px 0 6px; letter-spacing: 0.04em; }
+p { font-size: 14px; color: var(--ink2); line-height: 1.85; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+.divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+/* ── CALLOUTS ── */
+.note { padding: 12px 16px; margin: 16px 0; border-left: 3px solid var(--blue); background: var(--blu-bg); font-size: 13px; color: var(--ink2); line-height: 1.75; }
+.note.teal { border-left-color: var(--teal); background: var(--tea-bg); }
+.note.red { border-left-color: var(--red); background: var(--red-bg); }
+.note.yellow { border-left-color: var(--yellow); background: var(--yel-bg); }
+.note strong { color: var(--blue); }
+.note.teal strong { color: var(--teal); }
+.note.red strong { color: var(--red); }
+.note.yellow strong { color: var(--yellow); }
+
+/* ── SPEC BLOCKS ── */
+.spec { border: 1px solid var(--border); margin: 16px 0; background: var(--white); }
+.spec-head { padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
+.spec-head-title { font-family: var(--font-m); font-size: 11px; font-weight: 500; color: var(--ink); }
+.spec-badge { font-family: var(--font-m); font-size: 10px; padding: 2px 7px; border-radius: 2px; }
+.badge-live { background: var(--tea-bg); color: var(--teal); }
+.badge-v2 { background: var(--blu-bg); color: var(--blue); }
+.badge-v3 { background: var(--yel-bg); color: var(--yellow); }
+.spec-body { padding: 14px; font-size: 13px; color: var(--ink3); line-height: 1.75; }
+.spec-body p { font-size: 13px; margin-bottom: 10px; }
+
+/* ── MOMENT CARDS ── */
+.moment-grid { display: flex; flex-direction: column; gap: 2px; margin: 16px 0; }
+.moment { display: grid; grid-template-columns: 40px 1fr; border: 1px solid var(--border); background: var(--white); overflow: hidden; }
+.moment-num { background: var(--ink); color: white; font-family: var(--font-m); font-size: 12px; display: flex; align-items: center; justify-content: center; font-weight: 500; }
+.moment-content { padding: 14px 16px; }
+.moment-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.moment-desc { font-size: 12px; color: var(--ink3); line-height: 1.6; }
+.moment-meta { font-family: var(--font-m); font-size: 10px; color: var(--ink4); margin-top: 6px; }
+
+/* ── DIMENSION TABLE ── */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; border: 1px solid var(--border); }
+th { font-family: var(--font-m); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink4); padding: 9px 12px; border-bottom: 1px solid var(--border); text-align: left; background: var(--bg); }
+td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--ink2); vertical-align: top; line-height: 1.55; }
+tr:last-child td { border-bottom: none; }
+td:first-child { font-weight: 500; color: var(--ink); font-size: 13px; }
+
+/* ── VERSION BLOCKS ── */
+.version-block { border: 1px solid var(--border); margin-bottom: 12px; overflow: hidden; background: var(--white); }
+.vb-head { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; background: var(--bg); }
+.vb-ver { font-family: var(--font-m); font-size: 12px; font-weight: 500; color: var(--ink); }
+.vb-title { font-size: 13px; font-weight: 600; color: var(--ink2); }
+.vb-body { padding: 14px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.vb-col-label { font-family: var(--font-m); font-size: 10px; color: var(--ink4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.vb-item { font-size: 12px; color: var(--ink3); line-height: 1.6; margin-bottom: 6px; padding-left: 12px; position: relative; }
+.vb-item::before { content: '·'; position: absolute; left: 2px; color: var(--blue); }
+
+/* ── ACCEPTANCE CRITERIA ── */
+.ac-list { margin: 12px 0; }
+.ac-item { display: flex; gap: 10px; font-size: 13px; color: var(--ink2); line-height: 1.6; margin-bottom: 8px; align-items: flex-start; }
+.ac-check { width: 16px; height: 16px; border: 1.5px solid var(--border2); border-radius: 2px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--teal); background: var(--tea-bg); }
+
+/* ── BACK ── */
+.back-bar { padding: 20px 64px; border-top: 1px solid var(--border); background: var(--white); }
+.back-link { font-family: var(--font-m); font-size: 12px; color: var(--blue); text-decoration: none; letter-spacing: 0.04em; }
+
+@media (max-width: 960px) {
+  .body { grid-template-columns: 1fr; }
+  .aside-col { display: none; }
+  .main-col { padding: 40px 24px; border-right: none; }
+  .doc-top, .hero, .back-bar { padding-left: 24px; padding-right: 24px; }
+  .hero-status { flex-wrap: wrap; gap: 16px; }
+  .vb-body { grid-template-columns: 1fr; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="doc-top">
+  <div class="dt-left">
+    <span class="dt-product">PrepWise</span>
+    <span class="dt-sep">·</span>
+    <span class="dt-type">Product Requirements Document</span>
+  </div>
+  <span class="dt-right">Shreyas Pandit</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">PRD · v1.0</div>
+    <h1 class="hero-title">Product Requirements Document</h1>
+    <p class="hero-sub">Full feature specifications, session architecture, acceptance criteria, and the V1–V4 product roadmap for PrepWise — an AI interview intelligence platform for PM and Consulting candidates.</p>
+    <div class="hero-status">
+      <div class="hs-item"><div class="hs-label">Current Phase</div><div class="hs-val live">V1 Live</div></div>
+      <div class="hs-sep"></div>
+      <div class="hs-item"><div class="hs-label">Active Tracks</div><div class="hs-val">PM · Consulting (V2)</div></div>
+      <div class="hs-sep"></div>
+      <div class="hs-item"><div class="hs-label">Companies Live</div><div class="hs-val">9 Indian companies</div></div>
+      <div class="hs-sep"></div>
+      <div class="hs-item"><div class="hs-label">Tech Stack</div><div class="hs-val">Next.js · Claude API · Vercel</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="body">
+<div class="main-col">
+
+  <!-- S1: PRODUCT OVERVIEW -->
+  <div class="sect" id="overview">
+    <div class="sect-id">01 — Overview</div>
+    <h2>Product Overview</h2>
+    <p>PrepWise is a live AI interview simulation platform. Candidates enter a session by selecting their track, choosing a company, and providing their JD and resume. A company-specific AI architect then runs a structured interview — with real probing, real pushback, and feedback calibrated to that company's actual rubric.</p>
+    <p>The session follows a four-moment arc that mirrors how real interviews are structured. Every session ends resolved. Post-session, candidates receive an annotated transcript and a Readiness Score update across six skill dimensions that persists across all future sessions.</p>
+    <div class="note teal"><strong>Design principle:</strong> The session is the product. Everything else — Readiness Score, leaderboard, B2B pipeline — is built on top of what happens inside a session. If the session feels like a quiz, PrepWise is a quiz app. If it feels like a real interview, it's a career platform.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S2: SESSION ARCHITECTURE -->
+  <div class="sect" id="session">
+    <div class="sect-id">02 — Session Architecture</div>
+    <h2>The Four-Moment Session</h2>
+    <p>Every PrepWise session — across all tracks, all companies, all modes — follows four distinct moments. Each moment has a specific purpose, a specific duration, and a specific thing it trains. This architecture makes PrepWise feel like a real interview rather than a practice tool.</p>
+
+    <div class="moment-grid">
+      <div class="moment">
+        <div class="moment-num">01</div>
+        <div class="moment-content">
+          <div class="moment-title">The Briefing</div>
+          <div class="moment-desc">Before the interview starts, the user sees an Intel Card — a compact mission brief. Architect persona, company value signal, format preview, and expected duration. Sets expectations before the pressure begins.</div>
+          <div class="moment-meta">~30 seconds · V2 Priority</div>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-num">02</div>
+        <div class="moment-content">
+          <div class="moment-title">The Opening</div>
+          <div class="moment-desc">The architect introduces themselves, explains the format, and asks a warm-up opener — typically "tell me about yourself." Establishes the persona's voice and energy before the main case lands.</div>
+          <div class="moment-meta">60–90 seconds · V2 Priority</div>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-num">03</div>
+        <div class="moment-content">
+          <div class="moment-title">The Case</div>
+          <div class="moment-desc">The main event. Architect delivers the case conversationally, then probes — interrupting, redirecting, introducing constraints. 5–8 total exchanges, structured across the 6-stage case arc. Always resolves at Stage 6.</div>
+          <div class="moment-meta">25–30 min · 5–8 exchanges · V2 Priority</div>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-num">04</div>
+        <div class="moment-content">
+          <div class="moment-title">The Close</div>
+          <div class="moment-desc">Candidate asks questions. Architect responds in character. Scored — a candidate who says "no questions" has made a mistake. Ends with a clean resolution line from the architect before session wraps.</div>
+          <div class="moment-meta">2 minutes · V2 Priority</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>The 6-Stage Case Arc</h3>
+    <p>Within Moment 3, every case follows six stages regardless of track. The architect is stage-aware — it knows where it is and advances at the right moment. Hard exchange limits prevent the infinite follow-up loop that currently exists in V1.</p>
+
+    <table>
+      <thead><tr><th>Stage</th><th>What Happens</th><th>Exchange Limit</th></tr></thead>
+      <tbody>
+        <tr><td>1 — Clarification</td><td>Candidate asks 1–2 smart clarifying questions. Architect answers concisely. If candidate dives in without clarifying — noted in feedback.</td><td>Max 1</td></tr>
+        <tr><td>2 — Structuring</td><td>Candidate lays out their framework. Architect probes the structure once — never circles back to structuring in later stages.</td><td>1–2</td></tr>
+        <tr><td>3 — Analysis</td><td>Main case work. Architect introduces a new constraint or data point mid-analysis. Max 3 exchanges, then architect advances regardless.</td><td>Max 3</td></tr>
+        <tr><td>4 — Recommendation</td><td>Candidate lands their recommendation — clear, direct, with rationale. One exchange. Architect listens without interruption.</td><td>1</td></tr>
+        <tr><td>5 — Pushback</td><td>Architect pushes back once — even on a good answer. Candidate defends. One exchange only. Architect accepts and closes after defence.</td><td>1 — critical</td></tr>
+        <tr><td>6 — Resolution</td><td>Architect signals case completion. Transition to Moment 4. Session ends. Feedback loads.</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note red"><strong>Critical rule:</strong> The architect never probes the same dimension twice. Stage-aware behaviour and this rule together eliminate the infinite spiral problem in V1. Both the quick fix (exchange counter) and the proper fix (stage tracker) ship in V2.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S3: FEATURE SPECS -->
+  <div class="sect" id="features">
+    <div class="sect-id">03 — Feature Specifications</div>
+    <h2>Core Features</h2>
+
+    <h3>In-Session Features</h3>
+    <div class="spec">
+      <div class="spec-head"><span class="spec-head-title">Live Dimension Tracker</span><span class="spec-badge badge-v2">V2</span></div>
+      <div class="spec-body"><p>A subtle sidebar showing the 6 Readiness Score dimensions lighting up in real time as the candidate covers them during the session. Structuring lights up when they structure. Metrics lights up when they quantify. Trains self-monitoring — candidates learn which dimensions they consistently skip.</p></div>
+    </div>
+    <div class="spec">
+      <div class="spec-head"><span class="spec-head-title">Pause & Clarify Button</span><span class="spec-badge badge-v2">V2</span></div>
+      <div class="spec-body"><p>Candidate can pause at any point to ask a clarifying question. Asking the right clarifying question at the right moment is itself a skill PrepWise explicitly teaches. Usage is tracked and reflected in session feedback.</p></div>
+    </div>
+    <div class="spec">
+      <div class="spec-head"><span class="spec-head-title">Moment Bookmarking</span><span class="spec-badge badge-v2">V2</span></div>
+      <div class="spec-body"><p>A bookmark icon candidates tap during the session to flag moments they want to revisit in feedback. Makes post-session review targeted — candidates come in knowing exactly which moments to focus on.</p></div>
+    </div>
+    <div class="spec">
+      <div class="spec-head"><span class="spec-head-title">Post-Session Transcript Replay</span><span class="spec-badge badge-v2">V2</span></div>
+      <div class="spec-body"><p>Full session conversation with the architect's internal assessment of each response shown inline — colour-coded by dimension. Green = strong. Amber = acceptable. Red = needs work. The single most powerful post-session feature. Turns a session from an experience into a learning tool.</p></div>
+    </div>
+    <div class="spec">
+      <div class="spec-head"><span class="spec-head-title">Voice Mode</span><span class="spec-badge badge-v2">V2</span></div>
+      <div class="spec-body"><p>Web Speech API for candidate voice input. ElevenLabs TTS for architect voice output — different voice profiles per company archetype. Same four-moment arc, same assessment pipeline underneath. Adds filler word detection, speaking pace analysis, and pacing report to the post-session feedback.</p></div>
+    </div>
+    <div class="spec">
+      <div class="spec-head"><span class="spec-head-title">Resume DNA Engine</span><span class="spec-badge badge-v3">V3</span></div>
+      <div class="spec-body"><p>Upload PDF resume → Claude extracts companies, roles, domains, seniority, project experience, skill signals. Cases reference actual background. Gap analysis vs target role JD. STAR story coaching built from the candidate's own projects, positioned for the specific company's rubric.</p></div>
+    </div>
+
+    <h3>Readiness Score</h3>
+    <p>The cross-session skill model that separates PrepWise from every competitor. Tracks performance across six dimensions across all sessions — calibrated against the target company's specific rubric. A 7.4 against Zepto's bar (speed-of-decision, ops thinking) is a different number from 7.4 against CRED's (design taste, emotional intelligence).</p>
+
+    <table>
+      <thead><tr><th>Dimension</th><th>What It Tracks</th><th>How It's Measured</th></tr></thead>
+      <tbody>
+        <tr><td>Structuring</td><td>MECE thinking, framework quality, problem decomposition</td><td>Stage 2 architect assessment, dimensional scoring</td></tr>
+        <tr><td>Metrics Thinking</td><td>KPI choice, quantification, metric diagnosis</td><td>Flagged when candidate uses or avoids quantification</td></tr>
+        <tr><td>User Empathy</td><td>User-centring, journey thinking, design reasoning</td><td>Presence/absence of user framing in product answers</td></tr>
+        <tr><td>Prioritisation</td><td>Tradeoff reasoning, resource allocation</td><td>Quality of Stage 4 recommendation and Stage 5 defence</td></tr>
+        <tr><td>Business Sense</td><td>Revenue thinking, competitive positioning</td><td>Business context in framing and recommendation</td></tr>
+        <tr><td>Communication</td><td>Clarity, verbal structure, conciseness</td><td>Pacing report in voice mode, structure quality in text</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S4: TRACKS -->
+  <div class="sect" id="tracks">
+    <div class="sect-id">04 — Tracks</div>
+    <h2>PM Track — Live</h2>
+    <p>Nine Indian company personas live with full rubrics, interviewer personas, and case libraries. Case types: product sense, metrics, execution, prioritisation, strategy. Sub-roles: PM, APM Programs, AI PM, Product Designer.</p>
+
+    <h4>Company Library</h4>
+    <table>
+      <thead><tr><th>Company</th><th>Persona Style</th><th>Primary Case Types</th></tr></thead>
+      <tbody>
+        <tr><td>Zepto</td><td>Direct, fast-paced, operations-first</td><td>Metrics, execution, product sense</td></tr>
+        <tr><td>CRED</td><td>Thoughtful, design-conscious, brand-aware</td><td>Product sense, user empathy, strategy</td></tr>
+        <tr><td>Razorpay</td><td>Technical depth, developer empathy, scale thinking</td><td>Product sense, metrics, execution</td></tr>
+        <tr><td>Meesho</td><td>Frugality, Bharat-user lens, growth</td><td>Growth, product sense, metrics</td></tr>
+        <tr><td>PhonePe</td><td>Regulatory awareness, payments depth, scale</td><td>Strategy, execution, metrics</td></tr>
+        <tr><td>Groww</td><td>Simplicity obsession, trust, user education</td><td>Product sense, user empathy, strategy</td></tr>
+        <tr><td>Flipkart</td><td>Data-heavy, consumer obsession, ops awareness</td><td>Metrics, execution, strategy</td></tr>
+        <tr><td>RentoMojo</td><td>Asset management lens, subscription thinking</td><td>Product sense, execution, metrics</td></tr>
+        <tr><td>PhysicsWallah</td><td>EdTech depth, Tier 2-3 user empathy, scale</td><td>Product sense, user empathy, growth</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Consulting Track — V2</h2>
+    <p>Covers MBB (McKinsey interviewer-led, BCG/Bain candidate-led), Big 4 Strategy, and In-house Strategy at Indian conglomerates. The four-moment arc maps directly to how consulting interviews are structured — the case arc is even more standardised than PM interviews, making simulation fidelity more achievable.</p>
+
+    <div class="note"><strong>V2 scope decision:</strong> McKinsey and BCG/Bain ship first. Big 4 and In-house Strategy ship as V2.1 and V2.2 respectively. The distinction between McKinsey's interviewer-led format and BCG's candidate-led format requires different architect behaviours and ships as two separate modes.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S5: MODES -->
+  <div class="sect" id="modes">
+    <div class="sect-id">05 — Product Modes</div>
+    <h2>Practice Mode & Target Mode</h2>
+
+    <h3>Practice Mode</h3>
+    <p>For candidates building general interview foundations. Curated company pools — India (15 companies) and Global (25 companies across 8 archetypes). Candidate picks track, pool, company, difficulty, and case type. Session begins. Readiness Score updates after every session.</p>
+
+    <h3>Target Mode — The Global Unlock</h3>
+    <p>For candidates with a real application. JD + company name + resume → real-time AI research → fully personalised session built around this specific company and this specific candidate's background. Works for any company on earth, not just the curated pools.</p>
+
+    <div class="note teal"><strong>The key connection:</strong> Every job listing on the Jobs Page (V4) has a "Practice for this role" button. One tap → Target Mode launches pre-loaded with that JD and company name. The candidate uploads their resume and the interview begins. No other platform has this flow.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S6: ACCEPTANCE CRITERIA -->
+  <div class="sect" id="acceptance">
+    <div class="sect-id">06 — Acceptance Criteria</div>
+    <h2>V2 Acceptance Criteria</h2>
+    <p>The following criteria define when V2 is ready to ship. Each item is binary — done or not done.</p>
+
+    <div class="ac-list">
+      <div class="ac-item"><div class="ac-check">✓</div>Four-moment session arc implemented with stage-aware architect behaviour</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Exchange limits enforced — max 8 total exchanges per session, always resolves at Stage 6</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Architect never probes the same dimension twice within a session</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Architect pushback at Stage 5 fires exactly once for every session</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Post-session transcript replay with inline dimension colour-coding</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Consulting track live with McKinsey and BCG/Bain modes distinct</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Briefing Intel Card shown before every session</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Readiness Score updates after every session with dimension breakdown</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Moment bookmarking saves to post-session review correctly</div>
+      <div class="ac-item"><div class="ac-check">✓</div>Claude Sonnet active (not Haiku) for all session interactions</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S7: ROADMAP -->
+  <div class="sect" id="roadmap">
+    <div class="sect-id">07 — Roadmap</div>
+    <h2>V1 → V4 Roadmap</h2>
+
+    <div class="version-block">
+      <div class="vb-head"><span class="vb-ver">V1</span><span class="vb-title">Core Engine — Live</span><span class="spec-badge badge-live">Live</span></div>
+      <div class="vb-body">
+        <div><div class="vb-col-label">Shipped</div><div class="vb-item">Full PM interview loop end-to-end</div><div class="vb-item">9 Indian company personas with rubrics</div><div class="vb-item">54 case prompts across 6 types</div><div class="vb-item">5 core API routes functional</div><div class="vb-item">JD + resume → personalised session</div></div>
+        <div><div class="vb-col-label">Known Issues</div><div class="vb-item">No exchange limit — sessions can spiral</div><div class="vb-item">No post-session transcript replay</div><div class="vb-item">Claude Haiku active (Sonnet pending tier upgrade)</div><div class="vb-item">No Readiness Score persistence</div></div>
+      </div>
+    </div>
+
+    <div class="version-block">
+      <div class="vb-head"><span class="vb-ver">V2</span><span class="vb-title">Guided Setup + Consulting Track</span><span class="spec-badge badge-v2">Next</span></div>
+      <div class="vb-body">
+        <div><div class="vb-col-label">Building</div><div class="vb-item">Redesigned onboarding with session intent</div><div class="vb-item">Briefing Intel Card before every session</div><div class="vb-item">Four-moment arc with proper case resolution</div><div class="vb-item">Consulting track — McKinsey + BCG/Bain</div><div class="vb-item">Post-session transcript with annotations</div><div class="vb-item">Live dimension tracker in-session</div></div>
+        <div><div class="vb-col-label">Also V2</div><div class="vb-item">Voice mode with ElevenLabs personas</div><div class="vb-item">Filler word detection + pacing analysis</div><div class="vb-item">Moment bookmarking</div><div class="vb-item">Pause & Clarify button</div></div>
+      </div>
+    </div>
+
+    <div class="version-block">
+      <div class="vb-head"><span class="vb-ver">V3</span><span class="vb-title">Intelligence Layer</span><span class="spec-badge badge-v3">Planned</span></div>
+      <div class="vb-body">
+        <div><div class="vb-col-label">Building</div><div class="vb-item">Resume DNA — CV parsing and background inference</div><div class="vb-item">Personalised case generation from resume</div><div class="vb-item">Full Readiness Score with cross-session comparison</div><div class="vb-item">Blind spot detection</div></div>
+        <div><div class="vb-col-label">Also V3</div><div class="vb-item">Next session brief auto-generated</div><div class="vb-item">Session pacing report</div><div class="vb-item">Redo last response (practice mode only)</div><div class="vb-item">Cross-session comparison view</div></div>
+      </div>
+    </div>
+
+    <div class="version-block">
+      <div class="vb-head"><span class="vb-ver">V4</span><span class="vb-title">Platform + B2B Layer</span></div>
+      <div class="vb-body">
+        <div><div class="vb-col-label">Building</div><div class="vb-item">India + Global leaderboard</div><div class="vb-item">Jobs marketplace with "Practice for this role"</div><div class="vb-item">B2B talent pipeline for companies</div><div class="vb-item">Elite Club for top performers</div></div>
+        <div><div class="vb-col-label">Also V4</div><div class="vb-item">Peer mock matching</div><div class="vb-item">Gap analysis vs target role JD</div><div class="vb-item">STAR story coaching</div><div class="vb-item">Global scale — no hardcoded templates</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ASIDE -->
+<div class="aside-col">
+  <div class="aside-label">Contents</div>
+  <a class="toc-link" href="#overview">01 — Overview</a>
+  <a class="toc-link" href="#session">02 — Session Architecture</a>
+  <a class="toc-link" href="#features">03 — Feature Specs</a>
+  <a class="toc-link" href="#tracks">04 — Tracks</a>
+  <a class="toc-link" href="#modes">05 — Product Modes</a>
+  <a class="toc-link" href="#acceptance">06 — Acceptance Criteria</a>
+  <a class="toc-link" href="#roadmap">07 — Roadmap</a>
+
+  <div class="aside-block">
+    <div class="ab-title">V1 Live Links</div>
+    <div class="ab-item">prepwise-v2-lemon.vercel.app</div>
+    <div class="ab-item">shreyaspandit-01/prepwise-v2</div>
+  </div>
+
+  <div class="aside-block">
+    <div class="ab-title">Tech Stack</div>
+    <div class="ab-item">Next.js App Router</div>
+    <div class="ab-item">Tailwind CSS</div>
+    <div class="ab-item">Claude Haiku (Sonnet pending)</div>
+    <div class="ab-item">Vercel deployment</div>
+    <div class="ab-item">Supabase (V3+)</div>
+  </div>
+
+  <div class="aside-block">
+    <div class="ab-title">Key Rules</div>
+    <div class="ab-item">Architect never probes same dimension twice</div>
+    <div class="ab-item">Pushback fires exactly once</div>
+    <div class="ab-item">Max 8 exchanges per session</div>
+    <div class="ab-item">Every session resolves at Stage 6</div>
+  </div>
+</div>
+</div>
+
+<div class="back-bar">
+  <a class="back-link" href="javascript:history.back()">← Back to Portfolio</a>
+</div>
+
+<script>
+const links = document.querySelectorAll('.toc-link');
+const sections = document.querySelectorAll('[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+  links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+});
+</script>
+</body>
+</html>

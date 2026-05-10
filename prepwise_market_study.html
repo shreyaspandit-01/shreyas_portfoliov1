@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrepWise — Market Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F6F5F0;
+  --white: #FEFEFE;
+  --border: #E2E0D8;
+  --border2: #CAC8BE;
+  --ink: #1A1916;
+  --ink2: #30302A;
+  --ink3: #636058;
+  --ink4: #A09D94;
+  --slate: #2D4A7A;
+  --sla-bg: #EEF3FB;
+  --sla-bdr: #C0D0EC;
+  --olive: #4A6741;
+  --oli-bg: #EFF5EE;
+  --rust: #943520;
+  --rus-bg: #FDF0EC;
+  --font-b: 'DM Sans', sans-serif;
+  --font-s: 'Source Serif 4', serif;
+  --font-m: 'DM Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-b); font-size: 15px; line-height: 1.7; }
+
+/* ── HEADER ── */
+.header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 80px 36px;
+}
+.header-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 28px;
+}
+.header-type { font-family: var(--font-m); font-size: 11px; color: var(--slate); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+.header-title { font-family: var(--font-s); font-size: 44px; font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 10px; }
+.header-sub { font-size: 16px; font-weight: 300; color: var(--ink3); line-height: 1.7; max-width: 520px; }
+.header-aside { text-align: right; flex-shrink: 0; padding-top: 4px; }
+.ha-item { font-family: var(--font-m); font-size: 11px; color: var(--ink4); letter-spacing: 0.05em; line-height: 1.8; }
+.ha-item strong { color: var(--ink2); display: block; font-size: 12px; }
+.header-summary {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+}
+.hs-cell { background: var(--bg); padding: 14px 18px; }
+.hs-num { font-family: var(--font-s); font-size: 28px; font-weight: 600; color: var(--slate); line-height: 1; margin-bottom: 4px; }
+.hs-label { font-size: 11px; color: var(--ink4); line-height: 1.4; }
+
+/* ── BODY ── */
+.body { max-width: 820px; margin: 0 auto; padding: 60px 80px; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 56px; }
+.section-num { font-family: var(--font-m); font-size: 10px; color: var(--ink4); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+h2 { font-family: var(--font-s); font-size: 28px; font-weight: 600; line-height: 1.15; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 18px; }
+h3 { font-size: 14px; font-weight: 600; color: var(--ink); margin: 28px 0 10px; }
+p { font-size: 15px; color: var(--ink2); line-height: 1.9; margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+.divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+/* ── PULL STAT ── */
+.pull-stat { margin: 28px 0; padding: 0 0 0 20px; border-left: 3px solid var(--slate); }
+.ps-num { font-family: var(--font-s); font-size: 40px; font-weight: 600; color: var(--slate); line-height: 1; margin-bottom: 4px; }
+.ps-label { font-size: 13px; color: var(--ink3); line-height: 1.5; }
+
+/* ── CALLOUT ── */
+.callout { padding: 14px 18px; margin: 20px 0; border-left: 3px solid var(--slate); background: var(--sla-bg); font-size: 14px; color: var(--ink2); line-height: 1.8; }
+.callout.olive { border-left-color: var(--olive); background: var(--oli-bg); }
+.callout.rust { border-left-color: var(--rust); background: var(--rus-bg); }
+.callout strong { color: var(--slate); }
+.callout.olive strong { color: var(--olive); }
+.callout.rust strong { color: var(--rust); }
+
+/* ── TAM BREAKDOWN ── */
+.tam-stack { margin: 24px 0; }
+.tam-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: center; gap: 14px; margin-bottom: 10px; }
+.tam-label { font-family: var(--font-m); font-size: 10px; color: var(--ink4); letter-spacing: 0.08em; text-transform: uppercase; }
+.tam-bar-wrap { background: var(--border); height: 8px; border-radius: 2px; overflow: hidden; }
+.tam-bar { height: 100%; background: var(--slate); border-radius: 2px; }
+.tam-bar.sam { background: var(--olive); }
+.tam-bar.som { background: var(--rust); }
+.tam-val { font-family: var(--font-s); font-size: 18px; font-weight: 600; color: var(--ink); min-width: 80px; text-align: right; }
+
+/* ── COMPETITOR TABLE ── */
+table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+th { font-size: 11px; font-weight: 600; color: var(--ink4); letter-spacing: 0.06em; text-transform: uppercase; padding: 9px 12px; border-bottom: 2px solid var(--ink); text-align: left; }
+td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--ink2); vertical-align: top; line-height: 1.55; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--white); }
+td:first-child { font-weight: 500; color: var(--ink); }
+.cell-good { color: var(--olive); font-size: 12px; }
+.cell-bad { color: var(--rust); font-size: 12px; }
+
+/* ── POSITIONING MAP ── */
+.pos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.pos-card { border: 1px solid var(--border); background: var(--white); padding: 18px; }
+.pc-quadrant { font-family: var(--font-m); font-size: 10px; color: var(--ink4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.pc-label { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.pc-desc { font-size: 12px; color: var(--ink3); line-height: 1.65; }
+.pos-card.highlight { border-color: var(--sla-bdr); background: var(--sla-bg); }
+.pos-card.highlight .pc-label { color: var(--slate); }
+
+/* ── GTM PHASES ── */
+.gtm-stack { margin: 20px 0; }
+.gtm-phase { display: grid; grid-template-columns: 80px 1fr; gap: 0; border: 1px solid var(--border); margin-bottom: -1px; background: var(--white); }
+.gtm-num { padding: 16px; border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.gtm-phase-num { font-family: var(--font-s); font-size: 22px; font-weight: 600; color: var(--slate); line-height: 1; }
+.gtm-phase-label { font-family: var(--font-m); font-size: 9px; color: var(--ink4); letter-spacing: 0.08em; text-transform: uppercase; }
+.gtm-body { padding: 16px 18px; }
+.gtm-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.gtm-desc { font-size: 12px; color: var(--ink3); line-height: 1.65; }
+
+/* ── RISK TABLE ── */
+.risk-list { margin: 16px 0; }
+.risk-item { padding: 14px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
+.risk-item:last-child { border-bottom: none; }
+.risk-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: var(--ink3); line-height: 1.6; }
+.risk-mitigation { font-family: var(--font-m); font-size: 10px; color: var(--olive); text-align: right; white-space: nowrap; margin-top: 2px; }
+.risk-level { font-family: var(--font-m); font-size: 10px; padding: 2px 7px; border-radius: 2px; white-space: nowrap; }
+.rl-h { background: var(--rus-bg); color: var(--rust); }
+.rl-m { background: var(--sla-bg); color: var(--slate); }
+.rl-l { background: var(--oli-bg); color: var(--olive); }
+
+/* ── BACK ── */
+.back { display: block; padding: 20px 80px; border-top: 1px solid var(--border); background: var(--white); font-family: var(--font-m); font-size: 12px; color: var(--slate); text-decoration: none; letter-spacing: 0.04em; }
+
+@media (max-width: 768px) {
+  .header, .body, .back { padding-left: 24px; padding-right: 24px; }
+  .header-top { flex-direction: column; gap: 20px; }
+  .header-aside { text-align: left; }
+  .header-summary { grid-template-columns: 1fr 1fr; }
+  .pos-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-type">Market Study · Interview Prep</div>
+      <h1 class="header-title">PrepWise<br>Market Study</h1>
+      <p class="header-sub">TAM/SAM/SOM, competitive analysis, positioning, GTM strategy, and the structural case for why PrepWise wins in the PM and Consulting interview prep market.</p>
+    </div>
+    <div class="header-aside">
+      <div class="ha-item">Document <strong>Market Study</strong></div>
+      <div class="ha-item">Product <strong>PrepWise</strong></div>
+      <div class="ha-item">Author <strong>Shreyas Pandit</strong></div>
+    </div>
+  </div>
+  <div class="header-summary">
+    <div class="hs-cell"><div class="hs-num">$6.3B</div><div class="hs-label">Global TAM — interview prep by 2031</div></div>
+    <div class="hs-cell"><div class="hs-num">~85K</div><div class="hs-label">Active PM job seekers in India annually</div></div>
+    <div class="hs-cell"><div class="hs-num">0</div><div class="hs-label">Direct competitors with India-depth + AI simulation combined</div></div>
+    <div class="hs-cell"><div class="hs-num">₹199</div><div class="hs-label">Monthly price — below one human mock session</div></div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- S1: MARKET CONTEXT -->
+  <div class="section">
+    <div class="section-num">01 — Market Context</div>
+    <h2>Why Interview Prep Is a Real Market</h2>
+    <p>Interview prep has historically been a informal, word-of-mouth business — seniors helping juniors, peer mock sessions, the occasional coaching class. That's changing. The formalisation of PM recruiting in India, the emergence of structured consulting placement seasons at IIMs, and the proliferation of APM programs at funded startups have turned interview preparation into a definable, payable need.</p>
+    <p>Candidates know the stakes. A PM role at CRED or Zepto is not just a job — it's a career-defining moment that shapes trajectory for years. Consulting placements at MBB from IIMs determine where you spend the first decade of your career. The willingness to pay for preparation is high and growing.</p>
+
+    <div class="pull-stat">
+      <div class="ps-num">$6.3B</div>
+      <div class="ps-label">Global interview prep and career coaching market projected by 2031.<br>India is the fastest-growing segment — driven by PM role expansion and consulting placement culture.</div>
+    </div>
+
+    <h3>What's Driving Growth</h3>
+    <p>Three forces are converging. First, the number of PM roles in India has expanded significantly — every funded startup, every enterprise company digitising operations needs product managers, and supply hasn't kept up with demand. Second, the bar has risen: companies now have structured interview processes, company-specific rubrics, and multiple rounds. Third, LLM APIs have made it possible to build company-specific, persona-driven simulations that were technically infeasible two years ago.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S2: TAM SAM SOM -->
+  <div class="section">
+    <div class="section-num">02 — Market Sizing</div>
+    <h2>TAM / SAM / SOM</h2>
+
+    <div class="tam-stack">
+      <div class="tam-row">
+        <div class="tam-label">TAM</div>
+        <div class="tam-bar-wrap"><div class="tam-bar" style="width:100%"></div></div>
+        <div class="tam-val">$6.3B</div>
+      </div>
+      <div class="tam-row">
+        <div class="tam-label">SAM</div>
+        <div class="tam-bar-wrap"><div class="tam-bar sam" style="width:55%"></div></div>
+        <div class="tam-val">~$420M</div>
+      </div>
+      <div class="tam-row">
+        <div class="tam-label">SOM</div>
+        <div class="tam-bar-wrap"><div class="tam-bar som" style="width:12%"></div></div>
+        <div class="tam-val">~$18M</div>
+      </div>
+    </div>
+
+    <h3>TAM — Total Addressable Market</h3>
+    <p>The global interview prep and career coaching market, including all tools, cohort programs, coaching services, and platforms targeting candidates across all roles and geographies. $6.3B by 2031, growing at approximately 8% annually.</p>
+
+    <h3>SAM — Serviceable Addressable Market</h3>
+    <p>PM and consulting interview prep specifically — candidates who are actively preparing for structured interviews in these two tracks. India-based candidates plus Indian diaspora in global markets. Approximately $420M — based on 85K active PM job seekers in India annually, 50K+ consulting placement seekers, and willingness-to-pay research suggesting ₹200–500/month for a quality tool.</p>
+
+    <h3>SOM — Serviceable Obtainable Market</h3>
+    <p>PrepWise's realistic 3-year capture — approximately $18M — assumes 5-8% penetration of the SAM with a mix of B2C subscription revenue and early B2B revenue from company partnerships accessing the candidate pipeline. This is a conservative estimate that does not account for global expansion beyond India.</p>
+
+    <div class="callout olive"><strong>The B2B multiplier:</strong> SOM calculations for B2C platforms systematically underestimate value when a B2B revenue layer exists. PrepWise's B2B talent pipeline — companies paying to access pre-scored candidate pools — is not in the SAM calculation above. It significantly expands the revenue ceiling beyond pure subscription economics.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S3: COMPETITIVE -->
+  <div class="section">
+    <div class="section-num">03 — Competitive Landscape</div>
+    <h2>Who Else Is Playing</h2>
+    <p>The interview prep market has players, but none of them combine what PrepWise combines. The landscape splits into two categories: content platforms (question banks, video courses, written guides) and simulation tools (human mocks, AI tools). Content platforms have depth but no simulation. Simulation tools have interaction but no company-specific depth.</p>
+
+    <table>
+      <thead>
+        <tr><th>Competitor</th><th>What They Do Well</th><th>Where PrepWise Wins</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Exponent</td>
+          <td>Strong content library, large community, video explanations</td>
+          <td><span class="cell-good">Company-specific simulation, India depth, cross-session intelligence, AI-driven personalisation</span></td>
+        </tr>
+        <tr>
+          <td>Interview Kickstart</td>
+          <td>Live mentorship, structured cohort programs, real feedback</td>
+          <td><span class="cell-good">On-demand access, ₹199 vs ₹30,000+, no scheduling friction, improves with every session</span></td>
+        </tr>
+        <tr>
+          <td>Final Round AI</td>
+          <td>Real-time AI prompts during live interviews</td>
+          <td><span class="cell-good">Preparation tool vs assistance tool — fundamentally different use case. PrepWise builds skills, not crutches.</span></td>
+        </tr>
+        <tr>
+          <td>IGotAnOffer</td>
+          <td>Well-written PM guides, strong community forums</td>
+          <td><span class="cell-good">Simulation, company-specific rubrics, feedback that improves session to session. IGotAnOffer acknowledged the BizOps gap explicitly.</span></td>
+        </tr>
+        <tr>
+          <td>Human mock partners</td>
+          <td>Real conversation, genuine feedback, relationship</td>
+          <td><span class="cell-good">Availability at 2am, consistency of rubric, session data that persists, no scheduling friction, fraction of the cost</span></td>
+        </tr>
+        <tr>
+          <td>NextLeap / HelloPM</td>
+          <td>Cohort-based PM education with portfolio guidance</td>
+          <td><span class="cell-good">Interview simulation depth, India company specificity, on-demand vs cohort-locked, lower price point</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout rust"><strong>The honest gap:</strong> PrepWise does not have Exponent's content library or Interview Kickstart's human mentorship. The bet is that for interview preparation specifically — the final mile before an actual interview — simulation depth and company-specific rubrics matter more than video libraries. That bet is validated by how candidates actually spend the 2 weeks before an interview.</div>
+
+    <h3>Positioning Map</h3>
+    <div class="pos-grid">
+      <div class="pos-card">
+        <div class="pc-quadrant">High AI · Low Depth</div>
+        <div class="pc-label">Final Round AI</div>
+        <div class="pc-desc">AI-powered but generic. No company personas, no rubric calibration. Assistance during interviews, not preparation before them.</div>
+      </div>
+      <div class="pos-card highlight">
+        <div class="pc-quadrant">High AI · High Depth → PrepWise</div>
+        <div class="pc-label">PrepWise</div>
+        <div class="pc-desc">The only platform combining AI simulation with company-specific depth, cross-session intelligence, and an India-first company library. This quadrant is currently unoccupied.</div>
+      </div>
+      <div class="pos-card">
+        <div class="pc-quadrant">Low AI · Low Depth</div>
+        <div class="pc-label">Forum Content / Guides</div>
+        <div class="pc-desc">IGotAnOffer, Reddit, peer forums. Free, broad, but no simulation and no company-specific rubrics. High volume, low conversion to actual interview performance.</div>
+      </div>
+      <div class="pos-card">
+        <div class="pc-quadrant">Low AI · High Depth</div>
+        <div class="pc-label">Exponent / Interview Kickstart</div>
+        <div class="pc-desc">Strong content and mentorship but human-dependent. Can't scale simulation at cost, can't personalise at session level, can't build cross-session intelligence.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S4: GTM -->
+  <div class="section">
+    <div class="section-num">04 — Go-to-Market Strategy</div>
+    <h2>How PrepWise Reaches Candidates</h2>
+    <p>PrepWise's GTM is sequenced around the India market first — where the company library is deepest and the PMF signal is strongest — before expanding globally. Each phase builds the data and community assets that make the next phase cheaper to execute.</p>
+
+    <div class="gtm-stack">
+      <div class="gtm-phase">
+        <div class="gtm-num"><div class="gtm-phase-num">1</div><div class="gtm-phase-label">India</div></div>
+        <div class="gtm-body">
+          <div class="gtm-title">India Wedge — PM Candidates at Target Companies</div>
+          <div class="gtm-desc">Direct outreach to candidates applying to the 9 live companies. LinkedIn content demonstrating PrepWise's company-specific depth — teardown posts, session screenshots (with permission), Readiness Score case studies. Campus presence at IITs and Delhi University. The India company library is an unfair advantage no global tool can quickly replicate.</div>
+        </div>
+      </div>
+      <div class="gtm-phase">
+        <div class="gtm-num"><div class="gtm-phase-num">2</div><div class="gtm-phase-label">Consult</div></div>
+        <div class="gtm-body">
+          <div class="gtm-title">Consulting Track Launch — IIM Placement Season</div>
+          <div class="gtm-desc">Target IIM students in the 6 months before placement season. Consulting prep is a known, documented need — the MBB track gives PrepWise credibility with the highest-demand segment. Partnerships with student placement committees. Word-of-mouth is especially strong in this cohort — if one person in a study group uses PrepWise, all five will.</div>
+        </div>
+      </div>
+      <div class="gtm-phase">
+        <div class="gtm-num"><div class="gtm-phase-num">3</div><div class="gtm-phase-label">Global</div></div>
+        <div class="gtm-body">
+          <div class="gtm-title">Global Pool Unlock — Target Mode for Any Company</div>
+          <div class="gtm-desc">When Target Mode is live, PrepWise works for any company on earth — no new rubric required. This is the global unlock moment. Distribution shifts to product-led growth: candidates who use Target Mode for their specific interview share results, which drives organic acquisition from candidates at the same company. Each successful interview is a word-of-mouth event.</div>
+        </div>
+      </div>
+      <div class="gtm-phase">
+        <div class="gtm-num"><div class="gtm-phase-num">4</div><div class="gtm-phase-label">B2B</div></div>
+        <div class="gtm-body">
+          <div class="gtm-title">B2B Talent Pipeline — Companies as Customers</div>
+          <div class="gtm-desc">Once PrepWise has sufficient Readiness Score data across a meaningful candidate pool, companies pay to access pre-filtered, rubric-matched candidate pipelines. The pitch is simple: instead of screening 500 resumes, here are 20 candidates who've already been evaluated against your exact rubric. A conversion rate improvement of even 10% on hiring makes the subscription cost trivially small for most companies.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S5: RISKS -->
+  <div class="section">
+    <div class="section-num">05 — Risks and Mitigations</div>
+    <h2>What Could Go Wrong</h2>
+
+    <div class="risk-list">
+      <div class="risk-item">
+        <div>
+          <div class="risk-title">Large competitor enters India PM prep with company depth</div>
+          <div class="risk-desc">Exponent or a well-funded Indian startup builds 10+ Indian company rubrics and AI simulation. The moat narrows.</div>
+        </div>
+        <div><span class="risk-level rl-m">Medium</span><div class="risk-mitigation">Mitigation: session data moat compounds. Readiness Score data, blind spot detection, and cross-session intelligence can't be copied quickly — they require months of real user data to be meaningful.</div></div>
+      </div>
+      <div class="risk-item">
+        <div>
+          <div class="risk-title">LLM costs make the unit economics unworkable</div>
+          <div class="risk-desc">Claude API costs per session exceed what ₹199/month can support at scale, especially as session quality improves with Sonnet.</div>
+        </div>
+        <div><span class="risk-level rl-m">Medium</span><div class="risk-mitigation">Mitigation: session efficiency improvements (arc limits reduce token count), tiered pricing for power users, B2B revenue subsidising B2C cost structure.</div></div>
+      </div>
+      <div class="risk-item">
+        <div>
+          <div class="risk-title">Candidates don't convert from free to paid</div>
+          <div class="risk-desc">The free tier provides enough value that users don't upgrade. Free-to-paid conversion stays below 10%.</div>
+        </div>
+        <div><span class="risk-level rl-l">Low</span><div class="risk-mitigation">Mitigation: Readiness Score persistence, cross-session comparison, and bookmarked transcript replay are all paid-only features. The value of continued use is structurally paywalled.</div></div>
+      </div>
+      <div class="risk-item">
+        <div>
+          <div class="risk-title">Indian company rubrics become stale</div>
+          <div class="risk-desc">Companies change their interview formats. PrepWise's rubrics fall behind the actual bar — candidates who use PrepWise are under-prepared for how companies actually interview now.</div>
+        </div>
+        <div><span class="risk-level rl-l">Low</span><div class="risk-mitigation">Mitigation: community feedback loop. PrepWise users who go through real interviews can report format changes. Quarterly rubric reviews for all live companies.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- S6: CONCLUSION -->
+  <div class="section">
+    <div class="section-num">06 — Conclusion</div>
+    <h2>The Case for PrepWise</h2>
+    <p>The interview prep market is real, growing, and underserved for the specific tracks PrepWise targets. The tools that exist are either too generic (question banks, video courses) or too expensive and time-bound (human cohorts). The gap between them — on-demand, company-specific, AI-powered simulation with persistent skill tracking — is precisely where PrepWise sits.</p>
+    <p>The India wedge is not a limitation. It's the entry point. The deepest Indian startup rubric library of any platform is a genuine, compounding moat. And when Target Mode goes live, PrepWise becomes a global product without requiring a single additional rubric to be hardcoded.</p>
+
+    <div class="callout"><strong>The structural bet:</strong> Preparation and hiring are not two separate markets. They're two sides of the same candidate journey. PrepWise is the first platform building toward a position that serves both — and that's the business that has no direct competitor today, and will have a structural head start on any competitor that tries to build it tomorrow.</div>
+  </div>
+
+</div>
+
+<a class="back" href="javascript:history.back()">← Back to Portfolio</a>
+
+</body>
+</html>

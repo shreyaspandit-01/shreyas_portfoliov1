@@ -414,7 +414,7 @@ nav {
 .exp-card:hover { background: white; }
 .exp-co-name {
   font-family: var(--font-d);
-  font-size: 48px; font-weight: 900;
+  font-size: 56px; font-weight: 900;
   line-height: 0.95; letter-spacing: -0.03em;
   color: var(--ink); margin-bottom: 6px;
 }
@@ -694,7 +694,7 @@ footer {
     justify-content: center;
   }
   .nav-links { gap: 20px; }
-  .nav-links a { font-size: 10px; }
+  .nav-links a { font-size: 10px; white-space: nowrap; }
 
   /* HERO */
   .hero { padding: 80px 24px 60px; }
@@ -781,6 +781,114 @@ footer {
   nav { gap: 12px; }
   .nav-links { gap: 14px; }
 }
+
+/* Remove all italics from headings */
+h1 em, h2 em, h3 em,
+.section-title em,
+.hero-name em,
+.pw-flagship-title em,
+.wc-title em,
+.exp-co-name em,
+.tool-name em,
+.about-pull,
+.pw-flagship-title,
+.section-title {
+  font-style: normal !important;
+}
+
+/* ── BRAND THEMED WORK CARDS ── */
+.work-card.brand-linkedin {
+  border-top: 3px solid #0A66C2;
+  background: linear-gradient(135deg, #ffffff 0%, #F0F7FF 100%);
+}
+.work-card.brand-zepto {
+  border-top: 3px solid #8B2FC9;
+  background: linear-gradient(135deg, #ffffff 0%, #FAF5FF 100%);
+}
+.work-card.brand-groww {
+  border-top: 3px solid #00B386;
+  background: linear-gradient(135deg, #ffffff 0%, #F0FDF9 100%);
+}
+.work-card.brand-discord {
+  border-top: 3px solid #5865F2;
+  background: linear-gradient(135deg, #ffffff 0%, #F5F6FF 100%);
+}
+.work-card.brand-linkedin:hover { box-shadow: 0 20px 60px rgba(10,102,194,0.12); }
+.work-card.brand-zepto:hover { box-shadow: 0 20px 60px rgba(139,47,201,0.12); }
+.work-card.brand-groww:hover { box-shadow: 0 20px 60px rgba(0,179,134,0.12); }
+.work-card.brand-discord:hover { box-shadow: 0 20px 60px rgba(88,101,242,0.12); }
+
+.wc-brand-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.wc-logo { flex-shrink: 0; }
+.wc-brand-name {
+  font-family: var(--font-s);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.brand-linkedin .wc-brand-name { color: #0A66C2; }
+.brand-zepto .wc-brand-name { color: #8B2FC9; }
+.brand-groww .wc-brand-name { color: #00B386; }
+.brand-discord .wc-brand-name { color: #5865F2; }
+
+.wc-type-badge {
+  font-family: var(--font-s);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 2px;
+  margin-left: auto;
+}
+.brand-linkedin .wc-type-badge { background: #E8F0FA; color: #0A66C2; }
+.brand-zepto .wc-type-badge { background: #F3E8FF; color: #8B2FC9; }
+.brand-groww .wc-type-badge { background: #E6F9F4; color: #00B386; }
+.brand-discord .wc-type-badge { background: #EDEFFD; color: #5865F2; }
+
+
+
+/* PrepWise brand theme */
+.pw-flagship.brand-prepwise {
+  background: linear-gradient(135deg, #0F1729 0%, #1A2540 100%);
+  border: 1px solid rgba(201,168,78,0.25);
+}
+.pw-flagship.brand-prepwise::before {
+  background: linear-gradient(90deg, #C9A84E, transparent);
+}
+.pw-flagship.brand-prepwise .pw-flagship-title { color: #FFFFFF; }
+.pw-flagship.brand-prepwise .pw-flagship-title em { color: #C9A84E; font-style: normal; }
+.pw-flagship.brand-prepwise .pw-flagship-desc { color: rgba(255,255,255,0.6); }
+.pw-flagship.brand-prepwise .pw-live-badge { color: #4ADE80; }
+.pw-flagship.brand-prepwise .pw-live-dot { background: #4ADE80; box-shadow: 0 0 8px rgba(74,222,128,0.8); }
+.pw-flagship.brand-prepwise .pw-ver { background: rgba(255,255,255,0.04); }
+.pw-flagship.brand-prepwise .pw-ver.active { background: rgba(201,168,78,0.15); border-color: rgba(201,168,78,0.3); }
+.pw-flagship.brand-prepwise .pw-ver-label { color: rgba(255,255,255,0.35); }
+.pw-flagship.brand-prepwise .pw-ver.active .pw-ver-label { color: #C9A84E; }
+.pw-flagship.brand-prepwise .pw-ver-name { color: #FFFFFF; }
+.pw-flagship.brand-prepwise .pw-ver-desc { color: rgba(255,255,255,0.4); }
+.pw-flagship.brand-prepwise .pw-ver.active .pw-ver-desc { color: rgba(255,255,255,0.65); }
+.pw-flagship.brand-prepwise .pw-doc-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #fff; }
+.pw-flagship.brand-prepwise .pw-doc-card:hover { background: rgba(255,255,255,0.09); border-color: rgba(201,168,78,0.4); }
+.pw-flagship.brand-prepwise .pw-doc-name { color: #fff; }
+.pw-flagship.brand-prepwise .pw-doc-note { color: rgba(255,255,255,0.4); }
+.pw-flagship.brand-prepwise .pw-doc-link { color: #C9A84E; }
+.pw-flagship.brand-prepwise .pw-version-row { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.06); }
+
+
+/* ── ZERO ITALICS EVERYWHERE ── */
+em, i,
+.exp-co-name em,
+.section-title em,
+.hero-name em,
+.pw-flagship-title em,
+.wc-title em,
+.tool-name em,
+.footer-right,
+.about-pull,
+h1 em, h2 em, h3 em {
+  font-style: normal !important;
+}
+
 </style>
 </head>
 <body>
@@ -793,7 +901,7 @@ footer {
   <div></div>
   <ul class="nav-links">
     <li><a href="#prepwise">PrepWise</a></li>
-    <li><a href="#work">Case Studies</a></li>
+    <li><a href="#work">Work</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#tools">Work</a></li>
     <li><a href="#about">About</a></li>
@@ -830,13 +938,13 @@ footer {
 <div class="section-wrap" id="prepwise">
   <div class="section-header reveal">
     <div class="section-meta">
-      <div class="section-label">Flagship Project</div>
+      <div class="section-label">Product</div>
       <h2 class="section-title">Prep<em>Wise</em></h2>
       <p class="section-desc">The product I'm building from scratch. An AI interview intelligence platform — because the best way to understand PM is to do it.</p>
     </div>
   </div>
 
-  <div class="pw-flagship reveal">
+  <div class="pw-flagship brand-prepwise reveal">
       <div class="pw-live-badge"><div class="pw-live-dot"></div>Live · Actively building</div>
     <a href="https://prepwise-v2-lemon.vercel.app" target="_blank" style="text-decoration:none;"><div class="pw-flagship-title" style="cursor:pointer;">Prep<em>Wise</em></div></a>
     <p class="pw-flagship-desc">A live AI interview platform covering PM and Consulting tracks — with company-specific personas, rubrics, and case libraries modelled on how Zepto, CRED, Razorpay, McKinsey, and 20+ other companies actually evaluate candidates.</p>
@@ -892,16 +1000,21 @@ footer {
   <div class="section-header reveal">
     <div class="section-meta">
       <div class="section-label">Product Thinking</div>
-      <h2 class="section-title">Work &<br><em>Case Studies</em></h2>
+      <h2 class="section-title">Case Studies</h2>
       <p class="section-desc">Teardowns, improvements, original thinking. Real products, real problems — not frameworks for the sake of it.</p>
     </div>
   </div>
 
   <div class="work-grid reveal">
-    <div class="work-card wide" >
-      <div class="wc-type">Product Teardown</div>
-      <h3 class="wc-title">LinkedIn's <em>Broken</em><br>Job Search</h3>
-      <p class="wc-desc">Why the world's largest professional network fails at its most important job — and exactly how I'd fix it. Discovery, intent signals, and ghost jobs.</p>
+
+    <div class="work-card wide brand-linkedin" onclick="window.open('improvement_linkedin.html','_blank')" style="cursor:pointer;">
+      <div class="wc-brand-header">
+        <div class="wc-logo"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="6" fill="#0A66C2"/><path d="M8.5 11.5H11.5V19.5H8.5V11.5ZM10 10.5C9.17 10.5 8.5 9.83 8.5 9C8.5 8.17 9.17 7.5 10 7.5C10.83 7.5 11.5 8.17 11.5 9C11.5 9.83 10.83 10.5 10 10.5ZM19.5 19.5H16.5V15.25C16.5 14.01 16.48 12.42 14.75 12.42C13 12.42 12.75 13.77 12.75 15.16V19.5H9.75V11.5H12.63V12.85H12.67C13.07 12.1 14.03 11.31 15.46 11.31C18.5 11.31 19.5 13.24 19.5 15.81V19.5Z" fill="white"/></svg></div>
+        <div class="wc-brand-name">LinkedIn</div>
+        <span class="wc-type-badge">Improvement</span>
+      </div>
+      <h3 class="wc-title">LinkedIn's Broken Job Search</h3>
+      <p class="wc-desc">Why the world's largest professional network fails at its most important job — and exactly how I'd fix it. Feed quality, job freshness signals, and notification triage.</p>
       <div class="wc-tags">
         <span class="wc-tag">UX</span>
         <span class="wc-tag">Growth</span>
@@ -909,39 +1022,51 @@ footer {
       </div>
     </div>
 
-    <div class="work-card narrow" onclick="window.open('teardown_zepto.html','_blank')" style="cursor:pointer;">
-      <div class="wc-soon">Coming soon</div>
-      <div class="wc-type">Product Teardown</div>
-      <h3 class="wc-title">How <em>Zepto</em><br>Hooks You</h3>
-      <p class="wc-desc">Retention loops, delivery promise mechanics, and the subtle UX that makes 10-minute delivery feel like the only option.</p>
+    <div class="work-card narrow brand-zepto" onclick="window.open('teardown_zepto.html','_blank')" style="cursor:pointer;">
+      <div class="wc-brand-header">
+        <div class="wc-logo"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="6" fill="#8B2FC9"/><text x="14" y="20" text-anchor="middle" font-family="Arial" font-weight="900" font-size="16" fill="white">Z</text></svg></div>
+        <div class="wc-brand-name">Zepto</div>
+        <span class="wc-type-badge">Teardown</span>
+      </div>
+      <h3 class="wc-title">Zepto Gets You in the Door. Then Stops Trying.</h3>
+      <p class="wc-desc">Dissecting Zepto's retention loops and the three bets it needs to make before someone else makes them first.</p>
       <div class="wc-tags">
         <span class="wc-tag">Retention</span>
-        <span class="wc-tag">Engagement</span>
+        <span class="wc-tag">Quick Commerce</span>
       </div>
     </div>
 
-    <div class="work-card half">
-<div class="wc-type">Product Teardown</div>
-      <h3 class="wc-title"><em>Groww's</em> Simplicity<br>Trap</h3>
-      <p class="wc-desc">How Groww made investing feel effortless — and where that simplicity starts to break down for serious investors.</p>
+    <div class="work-card half brand-groww" onclick="window.open('teardown_groww.html','_blank')" style="cursor:pointer;">
+      <div class="wc-brand-header">
+        <div class="wc-logo"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="6" fill="#00B386"/><path d="M8 18L12 10L16 14L20 8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="wc-brand-name">Groww</div>
+        <span class="wc-type-badge">Teardown</span>
+      </div>
+      <h3 class="wc-title">Groww's Simplicity Trap</h3>
+      <p class="wc-desc">Groww made investing effortless. That's also its biggest problem. A deep look at the user maturity gap.</p>
       <div class="wc-tags">
         <span class="wc-tag">Fintech</span>
-        <span class="wc-tag">Engagement</span>
+        <span class="wc-tag">Retention</span>
       </div>
     </div>
 
-    <div class="work-card half">
-<div class="wc-type">Product Improvement</div>
-      <h3 class="wc-title"><em>Discord's</em><br>Discovery Problem</h3>
-      <p class="wc-desc">Discord is where communities live — but finding the right ones is broken. A full improvement proposal with metrics and rollout.</p>
+    <div class="work-card half brand-discord" onclick="window.open('improvement_discord.html','_blank')" style="cursor:pointer;">
+      <div class="wc-brand-header">
+        <div class="wc-logo"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="6" fill="#5865F2"/><path d="M19.5 9C18.4 8.5 17.2 8.2 16 8L15.8 8.4C17.1 8.7 18.2 9.2 19.2 9.8C17.6 8.9 15.8 8.4 14 8.4C12.2 8.4 10.4 8.9 8.8 9.8C9.8 9.2 10.9 8.7 12.2 8.4L12 8C10.8 8.2 9.6 8.5 8.5 9C6.5 12 6 14.8 6.2 17.6C7.4 18.5 8.8 19.2 10.3 19.6C10.6 19.2 10.9 18.7 11.1 18.2C10.6 18 10.1 17.8 9.6 17.5L9.9 17.2C12.6 18.5 15.4 18.5 18.1 17.2L18.4 17.5C17.9 17.8 17.4 18 16.9 18.2C17.1 18.7 17.4 19.2 17.7 19.6C19.2 19.2 20.6 18.5 21.8 17.6C22.1 14.4 21.2 11.6 19.5 9ZM11.5 16C10.7 16 10 15.2 10 14.3C10 13.3 10.7 12.5 11.5 12.5C12.3 12.5 13 13.3 13 14.3C13 15.2 12.3 16 11.5 16ZM16.5 16C15.7 16 15 15.2 15 14.3C15 13.3 15.7 12.5 16.5 12.5C17.3 12.5 18 13.3 18 14.3C18 15.2 17.3 16 16.5 16Z" fill="white"/></svg></div>
+        <div class="wc-brand-name">Discord</div>
+        <span class="wc-type-badge">Improvement</span>
+      </div>
+      <h3 class="wc-title">Discord's Discovery Problem</h3>
+      <p class="wc-desc">Discord has the communities. It just can't help you find them. A structured proposal to fix matchmaking.</p>
       <div class="wc-tags">
         <span class="wc-tag">Discovery</span>
         <span class="wc-tag">Retention</span>
       </div>
     </div>
 
-
   </div>
+
+</div>
 </div>
 
 <!-- ══ EXPERIENCE ══ -->
@@ -950,13 +1075,13 @@ footer {
     <div class="section-meta">
       <div class="section-label">Where I've Been</div>
       <h2 class="section-title"><em>22 months</em><br>inside real products</h2>
-      <p class="section-desc">Not internships in name only. I was inside the decisions, the data, and the feedback loops.</p>
+      
     </div>
   </div>
 
   <div class="exp-layout reveal">
     <div class="exp-card">
-      <h3 class="exp-co-name">Wish<em>link</em></h3>
+      <h3 class="exp-co-name">Wishlink</h3>
       <div class="exp-period">Growth & Product · April 2025 – Present</div>
       <div class="exp-impact">
         <div class="exp-impact-item">
@@ -984,7 +1109,7 @@ footer {
     </div>
 
     <div class="exp-card">
-      <h3 class="exp-co-name">Out<em>scal</em></h3>
+      <h3 class="exp-co-name">Outscal</h3>
       <div class="exp-period">Founder's Office · Sep 2023 – Jun 2024</div>
       <div class="exp-impact">
         <div class="exp-impact-item">
@@ -1057,7 +1182,7 @@ footer {
     <div>
       <div class="about-pull">"Here's everything I've made and learned so far."</div>
       <div class="about-body">
-        <p>I'm Shreyas — a <strong>fresher aspiring PM</strong> from Delhi, currently in my final year at Shaheed Bhagat Singh College, University of Delhi.</p>
+        <p>I'm Shreyas — based in Delhi, currently in my final year at Shaheed Bhagat Singh College, University of Delhi.</p>
         <p>I've spent the last 2 years inside real products — Founder's Office and community builder at Outscal (ed-tech), and growth at Wishlink (creator economy). I've sat inside the decisions and the feedback loops. I've seen what moves products and what doesn't.</p>
         <p>Now I'm building PrepWise — an AI interview platform I started because I wanted to understand what it feels like to <strong>own a product end to end.</strong> Not just write about it. Build it, break it, fix it.</p>
         <p>I believe the best PMs are obsessive learners. I break products down to understand them. I document everything because writing forces clarity. I'm building tools because shipping is the fastest way to learn.</p>
